@@ -1,6 +1,6 @@
 # Hito 1 - Conectando Django a una Base de Datos PostgreSQL
 
-Este proyecto corresponde al desarrollo del Hito 1 para la plataforma de arriendo de inmuebles, enfocado en la configuración del entorno, diseño del modelo de datos relacional y manipulación de registros mediante ORM.
+Lo siguente corresponde al desarrollo del Hito 1 para la plataforma de arriendo de inmuebles, enfocado en la configuración del entorno, diseño del modelo de datos relacional y manipulación de registros mediante ORM.
 
 ---
 
@@ -83,3 +83,32 @@ Este proyecto corresponde al desarrollo del Hito 1 para la plataforma de arriend
         # d. Borrar un registro (Delete)
 
         borrar_inmueble(inmueble.id)
+
+# Hito 2 - Parte 1 - Configuración del Admin de Django
+
+Esto corresponde al desarrollo del Hito 2 para la plataforma de arriendo de inmuebles, enfocado en la creación de un superusuario, el registro de modelos en el panel de administración y la personalización de la interfaz para optimizar la gestión de datos mediante columnas, filtros y barras de búsqueda.
+
+---
+
+## 1. Creación del Superusuario
+
+Se crea el super user
+
+1. **Ejecutar el comando de administración:**
+
+   ```bash
+   python manage.py createsuperuser
+   ```
+
+2. **Ingresar las credenciales solicitadas:**
+   - **Usuario:** admin
+   - **Email:** admin@ejemplo.com
+   - **Contraseña:** **\*\*\*\***
+
+## 2. Registro y Personalización del Admin (gestion_inmuebles/admin.py)
+
+En el archivo admin.py se registraron y personalizaron los modelos `Inmueble`, `Region`, `Comuna` y `TipoInmueble` para mejorar la usabilidad del panel.
+
+    Se importan los modelos al archivo
+
+    Se usa  @admin.register(nombre modelo) para personalizar la visualizacion usando  list_display, search_fields, y list_filter.
