@@ -92,23 +92,60 @@ Esto corresponde al desarrollo del Hito 2 para la plataforma de arriendo de inmu
 
 ## 1. Creación del Superusuario
 
-Se crea el super user
+    Se crea el super user
 
-1. **Ejecutar el comando de administración:**
+        1. **Ejecutar el comando de administración:**
 
-   ```bash
-   python manage.py createsuperuser
-   ```
+        ```bash
+        python manage.py createsuperuser
+        ```
 
-2. **Ingresar las credenciales solicitadas:**
-   - **Usuario:** admin
-   - **Email:** admin@ejemplo.com
-   - **Contraseña:** **\*\*\*\***
+        2. **Ingresar las credenciales solicitadas:**
+        - **Usuario:** admin
+        - **Email:** admin@ejemplo.com
+        - **Contraseña:** **\*\*\*\***
 
 ## 2. Registro y Personalización del Admin (gestion_inmuebles/admin.py)
 
-En el archivo admin.py se registraron y personalizaron los modelos `Inmueble`, `Region`, `Comuna` y `TipoInmueble` para mejorar la usabilidad del panel.
+    En el archivo admin.py se registraron y personalizaron los modelos `Inmueble`, `Region`, `Comuna` y `TipoInmueble` para mejorar la usabilidad del panel.
 
-    Se importan los modelos al archivo
+        Se importan los modelos al archivo
 
-    Se usa  @admin.register(nombre modelo) para personalizar la visualizacion usando  list_display, search_fields, y list_filter.
+        Se usa  @admin.register(nombre modelo) para personalizar la visualizacion usando  list_display, search_fields, y list_filter.
+
+# Hito 2 - Parte 2 - Autenticación, Vistas, Plantillas y Control de Acceso
+
+    Lo siguiente corresponde al desarrollo del Hito 2 (Parte 2) para la plataforma de arriendo de inmuebles, enfocado en la implementación de autenticación de usuarios mediante django-auth, estructuración de plantillas con Bootstrap, configuración de rutas y gestión de grupos y permisos.
+
+## 1. Configuración de URLs de Autenticación y Sitio (urls.py)
+
+    En proyecto_inmuebles/urls.py se actualizaron los archivos de rutas para integrar el panel administrativo, la página principal y las vistas de autenticación nativas y personalizadas.
+
+## 2. Lógica de Vistas (gestion_inmuebles/views.py)
+
+    En gestion_inmuebles/views.py se implementó la vista para la página principal y el flujo de registro basado en UserCreationForm.
+
+## 3. Estructura de Plantillas y Bootstrap (templates/)
+
+    Las plantillas se organizaron bajo una estructura limpia que incluye una plantilla base, componentes reutilizables, vistas de registro/autenticación y la página de inicio, integrando Bootstrap para el diseño base:
+
+    Estructura de directorios:
+
+        templates/
+        ├── base.html
+        ├── includes/
+        │ └── navbar.html
+        ├── registration/
+        │ ├── login.html
+        │ ├── logout.html
+        │ └── register.html
+        └── web/
+        └── home.html
+
+## 4. Gestión de Grupos y Permisos (init_groups.py)
+
+    Para cumplir con los requerimientos de control de acceso, se creó un script ejecutable en la raíz del proyecto para poblar los tres roles del sistema (arrendador, arrendatario, y administrador) y asignarles sus permisos sobre el modelo Inmueble:
+
+    Ejecución:
+
+        python init_groups.py
