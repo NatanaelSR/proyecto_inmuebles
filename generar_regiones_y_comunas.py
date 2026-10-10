@@ -1,5 +1,6 @@
 import json
 import requests
+import os
 
 URL = "https://juanbrujo.github.io/chile-regiones-comunas/data/original-simple.json"
 
@@ -89,7 +90,12 @@ for nombre_region in NOMBRES_REGIONES:
         })
         pk_comuna += 1
 
-with open("regiones_comunas.json", "w", encoding="utf-8") as f:
+
+# Asegurar que exista la carpeta fixtures dentro de gestion_inmuebles
+os.makedirs("gestion_inmuebles/fixtures", exist_ok=True)
+ruta_json = "gestion_inmuebles/fixtures/regiones_comunas.json"
+
+with open(ruta_json, "w", encoding="utf-8") as f:
     json.dump(fixture, f, ensure_ascii=False, indent=2)
 
 print("Fixture generado correctamente.")

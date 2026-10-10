@@ -135,4 +135,4 @@ MAILERS = {
     },
 }
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'perfil_usuario'
