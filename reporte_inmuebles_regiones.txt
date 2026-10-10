@@ -1,0 +1,50 @@
+--- LISTADO DE INMUEBLES DISPONIBLES POR REGIÓN ---
+
+
+Región: Antofagasta
+========================================
+- Nombre: Local Comercial en Antofagasta
+  Descripción: Excelente vitrina comercial en el sector norte.
+
+
+Región: Aysén del General Carlos Ibáñez del Campo
+========================================
+- Nombre: Departamento en Coyhaique
+  Descripción: Departamento cálido con aislación térmica y hermosa vista.
+
+
+Región: Biobío
+========================================
+- Nombre: Casa Familiar en Concepción
+  Descripción: Acogedora casa en barrio residencial tranquilo.
+
+
+Región: Coquimbo
+========================================
+- Nombre: Casa en La Serena
+  Descripción: Casa amplia cerca de la playa y avenida del mar.
+
+
+Región: La Araucanía
+========================================
+- Nombre: Departamento Céntrico en Temuco
+  Descripción: Departamento iluminado con excelente conectividad.
+
+
+Región: Región Metropolitana de Santiago
+========================================
+- Nombre: Departamento Moderno en Santiago Centro
+  Descripción: Departamento amoblado con vista panorámica, quincho y piscina.
+
+- Nombre: Casa Amplia en Providencia
+  Descripción: Hermosa casa estilo clásico, cercana a metro y áreas verdes.
+
+
+Región: Valparaíso
+========================================
+- Nombre: Local Comercial en Valparaíso
+  Descripción: Local estratégico en zona céntrica, alto flujo peatonal.
+
+- Nombre: Parcela de Agrado en Viña del Mar
+  Descripción: Amplio terreno con casa campestre, ideal para descanso.
+

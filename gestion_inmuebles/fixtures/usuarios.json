@@ -1,0 +1,232 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendador_carlos",
+      "first_name": "Carlos",
+      "last_name": "Soto",
+      "email": "carlos.soto@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 1,
+    "fields": {
+      "usuario": 2,
+      "tipo_usuario": "arrendador"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendador_ana",
+      "first_name": "Ana",
+      "last_name": "Torres",
+      "email": "ana.torres@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-02T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 2,
+    "fields": {
+      "usuario": 3,
+      "tipo_usuario": "arrendador"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendador_luis",
+      "first_name": "Luis",
+      "last_name": "Pérez",
+      "email": "luis.perez@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 3,
+    "fields": {
+      "usuario": 4,
+      "tipo_usuario": "arrendador"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendadora_marta",
+      "first_name": "Marta",
+      "last_name": "Gómez",
+      "email": "marta.gomez@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-04T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 4,
+    "fields": {
+      "usuario": 5,
+      "tipo_usuario": "arrendador"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendador_pedro",
+      "first_name": "Pedro",
+      "last_name": "Rojas",
+      "email": "pedro.rojas@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-05T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 5,
+    "fields": {
+      "usuario": 6,
+      "tipo_usuario": "arrendador"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendatario_sofia",
+      "first_name": "Sofía",
+      "last_name": "Valdés",
+      "email": "sofia.valdes@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-06T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 6,
+    "fields": {
+      "usuario": 7,
+      "tipo_usuario": "arrendatario"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendatario_diego",
+      "first_name": "Diego",
+      "last_name": "Silva",
+      "email": "diego.silva@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-07T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 7,
+    "fields": {
+      "usuario": 8,
+      "tipo_usuario": "arrendatario"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 9,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendataria_valentina",
+      "first_name": "Valentina",
+      "last_name": "Muñoz",
+      "email": "valentina.munoz@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-08T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 8,
+    "fields": {
+      "usuario": 9,
+      "tipo_usuario": "arrendatario"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 10,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendatario_ignacio",
+      "first_name": "Ignacio",
+      "last_name": "Morales",
+      "email": "ignacio.morales@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-09T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 9,
+    "fields": {
+      "usuario": 10,
+      "tipo_usuario": "arrendatario"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 11,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$test$123456",
+      "is_superuser": false,
+      "username": "arrendataria_camila",
+      "first_name": "Camila",
+      "last_name": "Herrera",
+      "email": "camila.herrera@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-09-10T00:00:00Z"
+    }
+  },
+  {
+    "model": "gestion_inmuebles.perfil",
+    "pk": 10,
+    "fields": {
+      "usuario": 11,
+      "tipo_usuario": "arrendatario"
+    }
+  }
+]

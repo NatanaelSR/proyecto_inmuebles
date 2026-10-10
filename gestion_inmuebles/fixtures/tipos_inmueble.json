@@ -1,0 +1,22 @@
+[
+  {
+    "model": "gestion_inmuebles.tipoinmueble",
+    "pk": 1,
+    "fields": { "nombre": "Casa" }
+  },
+  {
+    "model": "gestion_inmuebles.tipoinmueble",
+    "pk": 2,
+    "fields": { "nombre": "Departamento" }
+  },
+  {
+    "model": "gestion_inmuebles.tipoinmueble",
+    "pk": 3,
+    "fields": { "nombre": "Parcela" }
+  },
+  {
+    "model": "gestion_inmuebles.tipoinmueble",
+    "pk": 4,
+    "fields": { "nombre": "Local Comercial" }
+  }
+]

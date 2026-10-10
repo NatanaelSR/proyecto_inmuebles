@@ -1,0 +1,192 @@
+[
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 1,
+    "fields": {
+      "nombre": "Casa Amplia en Providencia",
+      "descripcion": "Hermosa casa estilo clásico, cercana a metro y áreas verdes.",
+      "m2_construidos": 140.0,
+      "m2_totales": 220.0,
+      "estacionamientos": 2,
+      "habitaciones": 4,
+      "banos": 2,
+      "direccion": "Av. Los Leones 1234",
+      "precio_mensual": 950000.00,
+      "disponible": true,
+      "comuna": 104,
+      "tipo_inmueble": 1,
+      "propietario": 2
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 2,
+    "fields": {
+      "nombre": "Departamento Moderno en Santiago Centro",
+      "descripcion": "Departamento amoblado con vista panorámica, quincho y piscina.",
+      "m2_construidos": 60.0,
+      "m2_totales": 65.0,
+      "estacionamientos": 1,
+      "habitaciones": 2,
+      "banos": 1,
+      "direccion": "San Francisco 450",
+      "precio_mensual": 480000.00,
+      "disponible": true,
+      "comuna": 130,
+      "tipo_inmueble": 2,
+      "propietario": 2
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 3,
+    "fields": {
+      "nombre": "Parcela de Agrado en Viña del Mar",
+      "descripcion": "Amplio terreno con casa campestre, ideal para descanso.",
+      "m2_construidos": 180.0,
+      "m2_totales": 1000.0,
+      "estacionamientos": 4,
+      "habitaciones": 5,
+      "banos": 3,
+      "direccion": "Camino Internacional S/N",
+      "precio_mensual": 1300000.00,
+      "disponible": true,
+      "comuna": 51,
+      "tipo_inmueble": 3,
+      "propietario": 3
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 4,
+    "fields": {
+      "nombre": "Local Comercial en Valparaíso",
+      "descripcion": "Local estratégico en zona céntrica, alto flujo peatonal.",
+      "m2_construidos": 90.0,
+      "m2_totales": 90.0,
+      "estacionamientos": 0,
+      "habitaciones": 1,
+      "banos": 2,
+      "direccion": "Condell 1150",
+      "precio_mensual": 800000.00,
+      "disponible": true,
+      "comuna": 45,
+      "tipo_inmueble": 4,
+      "propietario": 3
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 5,
+    "fields": {
+      "nombre": "Casa Familiar en Concepción",
+      "descripcion": "Acogedora casa en barrio residencial tranquilo.",
+      "m2_construidos": 110.0,
+      "m2_totales": 180.0,
+      "estacionamientos": 1,
+      "habitaciones": 3,
+      "banos": 2,
+      "direccion": "Barros Arana 500",
+      "precio_mensual": 650000.00,
+      "disponible": true,
+      "comuna": 215,
+      "tipo_inmueble": 1,
+      "propietario": 4
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 6,
+    "fields": {
+      "nombre": "Departamento Céntrico en Temuco",
+      "descripcion": "Departamento iluminado con excelente conectividad.",
+      "m2_construidos": 55.0,
+      "m2_totales": 58.0,
+      "estacionamientos": 1,
+      "habitaciones": 2,
+      "banos": 1,
+      "direccion": "Bulnes 320",
+      "precio_mensual": 420000.00,
+      "disponible": true,
+      "comuna": 248,
+      "tipo_inmueble": 2,
+      "propietario": 4
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 7,
+    "fields": {
+      "nombre": "Parcela con Vista en Puerto Montt",
+      "descripcion": "Hermosa parcela rodeada de naturaleza y tranquilidad.",
+      "m2_construidos": 160.0,
+      "m2_totales": 1500.0,
+      "estacionamientos": 3,
+      "habitaciones": 4,
+      "banos": 2,
+      "direccion": "Ruta 5 Sur Km 1010",
+      "precio_mensual": 1100000.00,
+      "disponible": false,
+      "comuna": 292,
+      "tipo_inmueble": 3,
+      "propietario": 5
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 8,
+    "fields": {
+      "nombre": "Local Comercial en Antofagasta",
+      "descripcion": "Excelente vitrina comercial en el sector norte.",
+      "m2_construidos": 120.0,
+      "m2_totales": 120.0,
+      "estacionamientos": 2,
+      "habitaciones": 0,
+      "banos": 2,
+      "direccion": "Av. Argentina 850",
+      "precio_mensual": 1500000.00,
+      "disponible": true,
+      "comuna": 12,
+      "tipo_inmueble": 4,
+      "propietario": 5
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 9,
+    "fields": {
+      "nombre": "Casa en La Serena",
+      "descripcion": "Casa amplia cerca de la playa y avenida del mar.",
+      "m2_construidos": 130.0,
+      "m2_totales": 250.0,
+      "estacionamientos": 2,
+      "habitaciones": 3,
+      "banos": 2,
+      "direccion": "Los Pinos 400",
+      "precio_mensual": 750000.00,
+      "disponible": true,
+      "comuna": 30,
+      "tipo_inmueble": 1,
+      "propietario": 6
+    }
+  },
+  {
+    "model": "gestion_inmuebles.inmueble",
+    "pk": 10,
+    "fields": {
+      "nombre": "Departamento en Coyhaique",
+      "descripcion": "Departamento cálido con aislación térmica y hermosa vista.",
+      "m2_construidos": 70.0,
+      "m2_totales": 75.0,
+      "estacionamientos": 1,
+      "habitaciones": 2,
+      "banos": 1,
+      "direccion": "Prat 200",
+      "precio_mensual": 500000.00,
+      "disponible": true,
+      "comuna": 322,
+      "tipo_inmueble": 2,
+      "propietario": 6
+    }
+  }
+]

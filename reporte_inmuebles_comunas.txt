@@ -1,0 +1,56 @@
+--- LISTADO DE INMUEBLES DISPONIBLES POR COMUNA ---
+
+
+Comuna: Antofagasta
+========================================
+- Nombre: Local Comercial en Antofagasta
+  Descripción: Excelente vitrina comercial en el sector norte.
+
+
+Comuna: Concepción
+========================================
+- Nombre: Casa Familiar en Concepción
+  Descripción: Acogedora casa en barrio residencial tranquilo.
+
+
+Comuna: Coyhaique
+========================================
+- Nombre: Departamento en Coyhaique
+  Descripción: Departamento cálido con aislación térmica y hermosa vista.
+
+
+Comuna: La Serena
+========================================
+- Nombre: Casa en La Serena
+  Descripción: Casa amplia cerca de la playa y avenida del mar.
+
+
+Comuna: Providencia
+========================================
+- Nombre: Casa Amplia en Providencia
+  Descripción: Hermosa casa estilo clásico, cercana a metro y áreas verdes.
+
+
+Comuna: Santiago
+========================================
+- Nombre: Departamento Moderno en Santiago Centro
+  Descripción: Departamento amoblado con vista panorámica, quincho y piscina.
+
+
+Comuna: Temuco
+========================================
+- Nombre: Departamento Céntrico en Temuco
+  Descripción: Departamento iluminado con excelente conectividad.
+
+
+Comuna: Valparaíso
+========================================
+- Nombre: Local Comercial en Valparaíso
+  Descripción: Local estratégico en zona céntrica, alto flujo peatonal.
+
+
+Comuna: Viña del Mar
+========================================
+- Nombre: Parcela de Agrado en Viña del Mar
+  Descripción: Amplio terreno con casa campestre, ideal para descanso.
+
