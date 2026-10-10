@@ -43,3 +43,18 @@ class Inmueble(models.Model):
 
     def __str__(self):
         return f"{self.nombre} - ${self.precio_mensual}"
+
+
+
+
+TIPO_USUARIO_CHOICES = (
+    ('arrendador', 'Arrendador'),
+    ('arrendatario', 'Arrendatario'),
+)
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
+    tipo_usuario = models.CharField(max_length=20, choices=TIPO_USUARIO_CHOICES, default='arrendatario')
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.get_tipo_usuario_display()}"
