@@ -194,3 +194,29 @@ Modelo Perfil (models.py): Creación de un modelo vinculado mediante una relaci�
 Formulario de Registro Personalizado (forms.py): Desarrollo de RegistroUsuarioForm (heredado de UserCreationForm) que extiende el registro web estándar para capturar y asignar dinámicamente el rol elegido al crear la cuenta del usuario en la base de datos.
 
 Adaptación de Vistas y Plantillas: Actualización de views.py y del formulario en la interfaz (register.html) para procesar correctamente el perfil personalizado e integrar la selección de roles de forma visual y accesible.
+
+# Hito 4: Gestión de Perfiles, Autenticación y Autorización
+
+## Parte 1: Registro, Autenticación y Asignación de Roles
+
+En esta primera etapa se implementó el flujo completo de registro y autenticación de usuarios, garantizando la vinculación automática entre las cuentas de usuario, sus perfiles personalizados y los grupos de permisos de Django.
+
+### Implementaciones Realizadas:
+
+1. **Lógica de Registro Automatizado (`views.py`)**:
+   - Integración del formulario de registro público (`RegistroUsuarioForm`).
+   - Creación automática del modelo `Perfil` asociado al usuario en el momento del registro.
+   - Captura del `tipo_usuario` (Arrendador / Arrendatario) asignado durante el registro.
+
+2. **Asignación Automática de Grupos de Permisos**:
+   - Vinculación transparente e inmediata del nuevo usuario a los grupos correspondientes (`Arrendadores` o `Arrendatarios`).
+   - Manejo de excepciones para evitar caídas en el sistema si el grupo no ha sido inicializado previamente.
+
+3. **Autenticación e Inicio de Sesión Automático**:
+   - Implementación de `login(request, user)` posterior al registro para autenticar directamente al usuario.
+   - Redirección automática a la vista de perfil (`perfil_usuario`), optimizando el flujo de navegación de la aplicación.
+
+4. **Gestión y Actualización de Perfil**:
+   - Implementación de la vista protegida `@login_required` para la edición de información del usuario mediante `ActualizarUsuarioForm`.
+   - Modificación de datos personales (Nombre, Apellido, Email) resguardando la integridad del nombre de usuario (`username`).
+   - Notificaciones al usuario mediante el sistema de mensajes de Django (`django.contrib.messages`).
