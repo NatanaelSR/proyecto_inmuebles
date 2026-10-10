@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">{{ inmueble.nombre }}</h3>
+                    <span class="badge bg-light text-dark fs-6">{{ inmueble.get_tipo_inmueble_display }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Columna de Información Principal -->
+                        <div class="col-md-7">
+                            <h4 class="text-secondary mb-3">Descripción</h4>
+                            <p class="text-muted">{{ inmueble.descripcion|default:"Sin descripción disponible." }}</p>
+
+                            <hr>
+
+                            <h5 class="text-secondary mt-4">Ubicación</h5>
+                            <p class="mb-1"><strong>Dirección:</strong> {{ inmueble.direccion }}</p>
+                            <p class="mb-3"><strong>Comuna:</strong> {{ inmueble.comuna }}</p>
+                        </div>
+
+                        <!-- Columna de Atributos y Precio -->
+                        <div class="col-md-5 border-start">
+                            <div class="p-3 bg-light rounded shadow-sm mb-4">
+                                <h5 class="text-success fw-bold mb-3">Precio Mensual</h5>
+                                <h2 class="text-dark fw-bold">${{ inmueble.precio_formateado }} <span
+                                        class="fs-6 text-muted font-weight-normal">CLP</span></h2>
+                            </div>
+
+                            <h5 class="text-secondary mb-3">Características</h5>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-bed me-2"></i> Habitaciones</span>
+                                    <span ">{{ inmueble.habitaciones }}</span>
+                                </li>
+                                <li class=" list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-bath me-2"></i> Baños</span>
+                                        <span>{{ inmueble.banos }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-parking me-2"></i> Estacionamientos</span>
+                                    <span>{{ inmueble.estacionamientos }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-ruler-combined me-2"></i> Superficie Construida</span>
+                                    <strong>{{ inmueble.m2_construidos }} m²</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-ruler me-2"></i> Superficie Total</span>
+                                    <strong>{{ inmueble.m2_totales }} m²</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                        <a href="{% url 'listar_inmuebles' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Volver al listado
+                        </a>
+                        {% if user.is_authenticated and user == inmueble.propietario %}
+                        <div>
+                            <a href="#" class="btn btn-warning me-2">Editar</a>
+                            <a href="#" class="btn btn-danger">Eliminar</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
