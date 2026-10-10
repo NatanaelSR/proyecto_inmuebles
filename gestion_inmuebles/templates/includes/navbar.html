@@ -5,6 +5,21 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Enlaces generales o condicionales a la izquierda/centro -->
+            <ul class="navbar-nav me-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'listar_inmuebles' %}">Ver Inmuebles</a>
+                </li>
+                {% if user.perfil.tipo_usuario == 'arrendador' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mis_inmuebles' %}">Mis Inmuebles</a>
+                </li>
+                {% endif %}
+                {% endif %}
+            </ul>
+
+            <!-- Enlaces de usuario a la derecha -->
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">

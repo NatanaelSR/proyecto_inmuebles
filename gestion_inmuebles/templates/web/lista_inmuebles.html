@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <h2 class="mb-4">Propiedades Disponibles para Arriendo</h2>
+
+    <div class="row">
+        {% if inmuebles %}
+        {% for inmueble in inmuebles %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ inmueble.nombre }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ inmueble.tipo_inmueble }} - {{ inmueble.comuna }}</h6>
+                    <p class="card-text">{{ inmueble.descripcion|truncatechars:100 }}</p>
+                    <ul class="list-unstyled small text-muted mb-3">
+                        <li><strong>Dirección:</strong> {{ inmueble.direccion }}</li>
+                        <li><strong>Habitaciones:</strong> {{ inmueble.habitaciones }} |
+                            <strong>Baños:</strong> {{inmueble.banos }}
+                        </li>
+                        <li><strong>Superficie:</strong> {{ inmueble.m2_construidos }} m² construidos</li>
+                    </ul>
+                    <h5 class="text-success">${{ inmueble.precio_formateado }} CLP / mes</h5>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-outline-primary w-100">Ver
+                        Detalles</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+                No hay inmuebles disponibles en este momento.
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

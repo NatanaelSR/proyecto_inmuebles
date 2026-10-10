@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Confirmar Eliminación</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p class="fs-5">¿Estás seguro de que deseas eliminar el inmueble
+                        <strong>"{{ inmueble.nombre}}"</strong>?
+                    </p>
+                    <p class="text-muted small">Esta acción no se puede deshacer.</p>
+
+                    <form method="POST" class="mt-4">
+                        {% csrf_token %}
+                        <a href="{% url 'mis_inmuebles' %}" class="btn btn-secondary me-2">Cancelar</a>
+                        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

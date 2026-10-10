@@ -1,222 +1,344 @@
 # Hito 1 - Conectando Django a una Base de Datos PostgreSQL
 
-Lo siguente corresponde al desarrollo del Hito 1 para la plataforma de arriendo de inmuebles, enfocado en la configuración del entorno, diseño del modelo de datos relacional y manipulación de registros mediante ORM.
+Lo siguiente corresponde al desarrollo del Hito 1 para la plataforma de arriendo de inmuebles, enfocado en la configuración del entorno, el diseño del modelo de datos relacional y la manipulación de registros mediante ORM.
 
 ---
 
 ## 1. Configuración del Entorno de Desarrollo
 
-1.  **Crear y activar entorno virtual:**
+### 1.1. Crear y activar el entorno virtual
 
-    ```bash
-    py -m venv env
+```bash
+py -m venv env
+.\env\Scripts\activate
+```
 
-    .\env\Scripts\activate
+### 1.2. Instalar dependencias
 
-    ```
+```bash
+pip install django psycopg2-binary
+```
 
-2.  **Instalar dependencias necesarias:**
+### 1.3. Crear la base de datos en PostgreSQL
 
-    ```Bash
-    pip install django psycopg2-binary
-    ```
+```sql
+CREATE DATABASE db_inmuebles;
+```
 
-3.  **Crear base de datos en PostgreSQL:**
+### 1.4. Configurar settings.py y ejecutar migraciones
 
-        SQL
-        CREATE DATABASE db_inmuebles;
+Configurar el diccionario DATABASES utilizando el motor django.db.backends.postgresql y las credenciales correspondientes.
 
-4.  **Configurar settings.py y ejecutar migraciones:**
-
-    Configurar el diccionario DATABASES con el motor django.db.backends.postgresql y las credenciales correspondientes. Luego ejecutar:
-
-        python manage.py makemigrations
-        python manage.py migrate
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
 ## 2. Modelo Relacional y Claves Foráneas (models.py)
 
-1. El modelo representa las entidades del negocio e incluye relaciones relacionales mediante ForeignKey:
+Los modelos representan las entidades del negocio:
 
-   Region: Almacena las regiones del país.
-
-   Comuna: Relacionada con Region (ForeignKey).
-
-   TipoInmueble: Clasificación de la propiedad (Casa, Departamento, Parcela, etc.).
-
-   Inmueble: Modelo principal que contiene los atributos de la propiedad y sus llaves foráneas conectadas a Comuna, TipoInmueble y User (Propietario).
+- Region: almacena las regiones del país.
+- Comuna: relacionada con Region mediante ForeignKey.
+- TipoInmueble: clasifica las propiedades (casa, departamento, parcela, etc.).
+- Inmueble: contiene los atributos de las propiedades y las claves foráneas hacia Comuna, TipoInmueble y User (propietario).
 
 ## 3. Operaciones CRUD (gestion_inmuebles/services.py)
 
-1.  Las 4 operaciones principales del CRUD se encuentran encapsuladas en el archivo de servicios. Para verificar su correcto funcionamiento desde la consola interactiva:
+Las cuatro operaciones CRUD se encuentran encapsuladas en el archivo de servicios.
 
-        python manage.py shell
+### 3.1. Abrir la consola de Django
 
-        from gestion_inmuebles.services import crear_inmueble, listar_inmuebles, actualizar_inmueble, borrar_inmueble
+```bash
+python manage.py shell
+```
 
-        # a. Crear un registro (Create)
+### 3.2. Importar las funciones
 
-        inmueble = crear_inmueble(
-        nombre="Departamento Central",
-        descripcion="Hermoso departamento de 2 ambientes.",
-        m2_construidos=50.0,
-        m2_totales=55.0,
-        estacionamientos=1,
-        habitaciones=2,
-        banos=1,
-        direccion="Av. Principal 123",
-        precio_mensual=450000,
-        comuna_id=1,
-        tipo_inmueble_id=1,
-        propietario_id=1
-        )
+```python
+from gestion_inmuebles.services import (
+    crear_inmueble,
+    listar_inmuebles,
+    actualizar_inmueble,
+    borrar_inmueble,
+)
+```
 
-        # b. Listar registros (Read)
+### 3.3. Crear un registro (Create)
 
-        inmuebles = listar_inmuebles()
-        for item in inmuebles:
-        print(item.nombre, "-", item.precio_mensual)
+```python
+inmueble = crear_inmueble(
+    nombre="Departamento Central",
+    descripcion="Hermoso departamento de 2 ambientes.",
+    m2_construidos=50.0,
+    m2_totales=55.0,
+    estacionamientos=1,
+    habitaciones=2,
+    banos=1,
+    direccion="Av. Principal 123",
+    precio_mensual=450000,
+    comuna_id=1,
+    tipo_inmueble_id=1,
+    propietario_id=1,
+)
+```
 
-        # c. Actualizar un registro (Update)
+### 3.4. Listar registros (Read)
 
-        actualizar_inmueble(inmueble.id, nuevo_precio=420000, nueva_descripcion="Precio rebajado")
+```python
+inmuebles = listar_inmuebles()
 
-        # d. Borrar un registro (Delete)
+for item in inmuebles:
+    print(item.nombre, "-", item.precio_mensual)
+```
 
-        borrar_inmueble(inmueble.id)
+### 3.5. Actualizar un registro (Update)
 
-# Hito 2 - Parte 1 - Configuración del Admin de Django
+```python
+actualizar_inmueble(
+    inmueble.id,
+    nuevo_precio=420000,
+    nueva_descripcion="Precio rebajado",
+)
+```
 
-Esto corresponde al desarrollo del Hito 2 para la plataforma de arriendo de inmuebles, enfocado en la creación de un superusuario, el registro de modelos en el panel de administración y la personalización de la interfaz para optimizar la gestión de datos mediante columnas, filtros y barras de búsqueda.
+### 3.6. Borrar un registro (Delete)
+
+```python
+borrar_inmueble(inmueble.id)
+```
 
 ---
 
+# Hito 2 - Parte 1 - Configuración del Admin de Django
+
+Este hito contempla la creación de un superusuario, el registro de modelos en el panel de administración y la personalización de la interfaz para optimizar la gestión de datos.
+
 ## 1. Creación del Superusuario
 
-1.  Se crea el super user
-    1. **Ejecutar el comando de administración:**
+### 1.1. Ejecutar el comando
 
-    ```bash
-       python manage.py createsuperuser
-    ```
+```bash
+python manage.py createsuperuser
+```
 
-    2. **Ingresar las credenciales solicitadas:**
-       - **Usuario:** admin
-       - **Email:** admin@ejemplo.com
-       - **Contraseña:** **\*\*\*\***
+### 1.2. Ingresar las credenciales
+
+- Usuario: admin
+- Email: admin@ejemplo.com
+- Contraseña: la definida durante la creación.
 
 ## 2. Registro y Personalización del Admin (gestion_inmuebles/admin.py)
 
-1.  En el archivo admin.py se registraron y personalizaron los modelos `Inmueble`, `Region`, `Comuna` y `TipoInmueble` para mejorar la usabilidad del panel.
+Se registraron y personalizaron los modelos Inmueble, Region, Comuna y TipoInmueble.
 
-        Se importan los modelos al archivo
+Se utilizaron las siguientes opciones:
 
-        Se usa  @admin.register(nombre modelo) para personalizar la visualizacion usando  list_display, search_fields, y list_filter.
+- @admin.register(Modelo): registra y personaliza un modelo.
+- list_display: define las columnas visibles.
+- search_fields: habilita las búsquedas.
+- list_filter: permite filtrar registros.
+
+---
 
 # Hito 2 - Parte 2 - Autenticación, Vistas, Plantillas y Control de Acceso
 
-Lo siguiente corresponde al desarrollo del Hito 2 (Parte 2) para la plataforma de arriendo de inmuebles, enfocado en la implementación de autenticación de usuarios mediante django-auth, estructuración de plantillas con Bootstrap, configuración de rutas y gestión de grupos y permisos.
+Este hito contempla la autenticación de usuarios mediante Django Auth, la estructuración de plantillas con Bootstrap, la configuración de rutas y la gestión de grupos y permisos.
 
-## 1. Configuración de URLs de Autenticación y Sitio (urls.py)
+## 1. Configuración de URLs (urls.py)
 
-1. En proyecto_inmuebles/urls.py se actualizaron los archivos de rutas para integrar el panel administrativo, la página principal y las vistas de autenticación nativas y personalizadas.
+En proyecto_inmuebles/urls.py se configuraron las rutas para:
+
+- El panel administrativo.
+- La página principal.
+- Las vistas de autenticación.
+- Las vistas personalizadas.
 
 ## 2. Lógica de Vistas (gestion_inmuebles/views.py)
 
-1. En gestion_inmuebles/views.py se implementó la vista para la página principal y el flujo de registro basado en UserCreationForm.
+Se implementaron las vistas para la página principal y el registro de usuarios mediante formularios de Django.
 
 ## 3. Estructura de Plantillas y Bootstrap (templates/)
 
-1.  Las plantillas se organizaron bajo una estructura limpia que incluye una plantilla base, componentes reutilizables, vistas de registro/autenticación y la página de inicio, integrando Bootstrap para el diseño base:
+Las plantillas se organizaron de la siguiente manera:
 
-    Estructura de directorios:
+```text
+templates/
+├── base.html
+├── includes/
+│   └── navbar.html
+├── registration/
+│   ├── login.html
+│   ├── logout.html
+│   └── register.html
+└── web/
+    └── home.html
+```
 
-        templates/
-        ├── base.html
-        ├── includes/
-        │ └── navbar.html
-        ├── registration/
-        │ ├── login.html
-        │ ├── logout.html
-        │ └── register.html
-        └── web/
-        └── home.html
+Se integró Bootstrap para el diseño de la interfaz.
 
 ## 4. Gestión de Grupos y Permisos (init_groups.py)
 
-1.  Para cumplir con los requerimientos de control de acceso, se creó un script ejecutable en la raíz del proyecto para poblar los tres roles del sistema (arrendador, arrendatario, y administrador) y asignarles sus permisos sobre el modelo Inmueble:
+Se creó un script para configurar los roles del sistema:
 
-    Ejecución:
+- Arrendador.
+- Arrendatario.
+- Administrador.
 
-        python init_groups.py
+### Ejecución
+
+```bash
+python init_groups.py
+```
+
+---
 
 # Hito 3 - Población de Base de Datos mediante Fixtures, Gestión de Roles y Reportes SQL
 
-Lo siguiente corresponde al desarrollo del Hito 3 para la plataforma de arriendo de inmuebles, enfocado en la carga masiva de datos mediante fixtures, la implementación de consultas SQL personalizadas para generación de reportes y la consolidación de la estructura relacional.
+Este hito contempla la carga masiva de datos mediante fixtures, la generación de reportes con consultas SQL y la consolidación de la estructura relacional.
 
-## 1. Población de Datos mediante Fixtures (fixtures/)
+## 1. Población de Datos mediante Fixtures
 
-1. Para asegurar la integridad de la base de datos y poblar el sistema con información inicial de prueba, se estructuraron y cargaron archivos de fixtures en formato JSON en orden de dependencia:
+Se prepararon archivos JSON para cargar los datos iniciales de la aplicación:
 
-Regiones y Comunas (regiones_comunas.json): Carga masiva de la estructura geográfica oficial de Chile, mapeando correctamente las 16 regiones y sus respectivas comunas con sus llaves foráneas (region_id).
+- regiones_comunas.json: contiene las regiones y comunas de Chile con sus respectivas relaciones.
+- tipos_inmueble.json: contiene las categorías de propiedades disponibles.
+- usuarios.json: contiene los usuarios de prueba.
+- inmuebles.json: contiene las propiedades asociadas a sus propietarios y comunas.
 
-Tipos de Inmueble (tipos_inmueble.json): Definición de las categorías de propiedades disponibles (Casa, Departamento, Parcela, Local Comercial).
+### Comandos de carga
 
-Usuarios e Inmuebles (usuarios.json e inmuebles.json): Carga de usuarios de prueba diferenciados y propiedades asociadas a sus respectivos propietarios y comunas reales.
+```bash
+python manage.py loaddata regiones_comunas.json
+python manage.py loaddata tipos_inmueble.json
+python manage.py loaddata usuarios.json
+python manage.py loaddata inmuebles.json
+```
 
-Comandos de carga ejecutados en orden:
+## 2. Scripts y Reportes por Comuna y Región
 
-    Bash
-    python manage.py loaddata regiones_comunas.json
-    python manage.py loaddata tipos_inmueble.json
-    python manage.py loaddata usuarios.json
-    python manage.py loaddata inmuebles.json 2. Reportes SQL y Exportación de Datos
+Se desarrollaron scripts independientes que utilizan consultas SQL mediante django.db.connection y exportan los resultados a archivos de texto.
 
-## 2. Scripts y reportes por comuna y region
+### 2.1. Reporte por comuna (reporte_comunas.py)
 
-Para cumplir con los requerimientos de consulta y almacenamiento de información del negocio, se desarrollaron scripts independientes en la raíz del proyecto utilizando consultas SQL directas con django.db.connection para exportar los resultados a archivos de texto:
+Realiza un JOIN entre las tablas de inmuebles y comunas para listar las propiedades disponibles por comuna.
 
-Reporte por Comuna (reporte_comunas.py): Consulta SQL que realiza un JOIN entre las tablas de inmuebles y comunas para listar las propiedades disponibles agrupadas por comuna, guardando el resultado en reporte_inmuebles_comunas.txt.
+Archivo generado: reporte_inmuebles_comunas.txt
 
-Reporte por Región (reporte_regiones.py): Consulta SQL que enlaza inmuebles, comunas y regiones mediante múltiples JOIN para estructurar un listado de inmuebles disponibles ordenados por región, exportándolo a reporte_inmuebles_regiones.txt.
+### 2.2. Reporte por región (reporte_regiones.py)
 
-Ejecución de los scripts:
+Relaciona las tablas de inmuebles, comunas y regiones mediante JOIN para generar un listado de propiedades disponibles por región.
 
-    Bash
-    python reporte_comunas.py
-    python reporte_regiones.py
+Archivo generado: reporte_inmuebles_regiones.txt
 
-## 3. Ampliación del Sistema: Gestión de Roles de Usuario (Arrendador / Arrendatario)
+### Ejecución de los reportes
 
-Como mejora complementaria al flujo de registro y control de acceso de la plataforma (fuera del alcance estricto del Hito 3), se implementó un sistema de diferenciación de roles web para los usuarios:
+```bash
+python reporte_comunas.py
+python reporte_regiones.py
+```
 
-Modelo Perfil (models.py): Creación de un modelo vinculado mediante una relación uno a uno (OneToOneField) al modelo User de Django, incorporando un campo de selección (choices) para definir si el usuario es arrendador o arrendatario.
+## 3. Gestión de Roles de Usuario (Arrendador / Arrendatario)
 
-Formulario de Registro Personalizado (forms.py): Desarrollo de RegistroUsuarioForm (heredado de UserCreationForm) que extiende el registro web estándar para capturar y asignar dinámicamente el rol elegido al crear la cuenta del usuario en la base de datos.
+Se implementó un sistema de diferenciación de roles para los usuarios.
 
-Adaptación de Vistas y Plantillas: Actualización de views.py y del formulario en la interfaz (register.html) para procesar correctamente el perfil personalizado e integrar la selección de roles de forma visual y accesible.
+### 3.1. Modelo Perfil (models.py)
 
-# Hito 4: Gestión de Perfiles, Autenticación y Autorización
+Se creó un modelo Perfil vinculado al modelo User mediante OneToOneField, con un campo choices para definir si el usuario es arrendador o arrendatario.
 
-## Parte 1: Registro, Autenticación y Asignación de Roles
+### 3.2. Formulario de Registro Personalizado (forms.py)
 
-En esta primera etapa se implementó el flujo completo de registro y autenticación de usuarios, garantizando la vinculación automática entre las cuentas de usuario, sus perfiles personalizados y los grupos de permisos de Django.
+Se desarrolló RegistroUsuarioForm, heredado de UserCreationForm, para capturar el rol seleccionado durante el registro.
 
-### Implementaciones Realizadas:
+### 3.3. Adaptación de Vistas y Plantillas
 
-1. **Lógica de Registro Automatizado (`views.py`)**:
-   - Integración del formulario de registro público (`RegistroUsuarioForm`).
-   - Creación automática del modelo `Perfil` asociado al usuario en el momento del registro.
-   - Captura del `tipo_usuario` (Arrendador / Arrendatario) asignado durante el registro.
+Se actualizaron views.py y register.html para procesar el perfil personalizado e integrar la selección de roles en la interfaz.
 
-2. **Asignación Automática de Grupos de Permisos**:
-   - Vinculación transparente e inmediata del nuevo usuario a los grupos correspondientes (`Arrendadores` o `Arrendatarios`).
-   - Manejo de excepciones para evitar caídas en el sistema si el grupo no ha sido inicializado previamente.
+---
 
-3. **Autenticación e Inicio de Sesión Automático**:
-   - Implementación de `login(request, user)` posterior al registro para autenticar directamente al usuario.
-   - Redirección automática a la vista de perfil (`perfil_usuario`), optimizando el flujo de navegación de la aplicación.
+# Hito 4 - Parte 1 - Gestión de Perfiles, Autenticación y Autorización
 
-4. **Gestión y Actualización de Perfil**:
-   - Implementación de la vista protegida `@login_required` para la edición de información del usuario mediante `ActualizarUsuarioForm`.
-   - Modificación de datos personales (Nombre, Apellido, Email) resguardando la integridad del nombre de usuario (`username`).
-   - Notificaciones al usuario mediante el sistema de mensajes de Django (`django.contrib.messages`).
+En esta etapa se implementó el flujo de registro y autenticación de usuarios, vinculando las cuentas con sus perfiles y grupos de permisos de Django.
+
+## 1. Registro Automatizado (views.py)
+
+Se implementaron las siguientes funcionalidades:
+
+- Integración del formulario RegistroUsuarioForm.
+- Creación automática del perfil asociado al usuario.
+- Captura del tipo de usuario: arrendador o arrendatario.
+
+## 2. Asignación Automática de Grupos de Permisos
+
+Se incorporó la asignación de usuarios a los grupos correspondientes:
+
+- Arrendadores.
+- Arrendatarios.
+
+También se agregó manejo de excepciones para evitar errores cuando los grupos no están inicializados.
+
+## 3. Autenticación e Inicio de Sesión Automático
+
+Se implementó login(request, user) después del registro para autenticar automáticamente al usuario.
+
+Luego, se redirige al usuario a la vista perfil_usuario.
+
+## 4. Gestión y Actualización del Perfil
+
+Se implementó una vista protegida mediante login_required para editar los datos personales utilizando ActualizarUsuarioForm.
+
+Las funcionalidades incluyen:
+
+- Modificación del nombre, apellido y correo electrónico.
+- Protección del nombre de usuario (username).
+- Notificaciones mediante django.contrib.messages.
+
+---
+
+# Hito 4 - Parte 2 - Gestión de Inmuebles, Vistas de Detalle y Formularios
+
+Esta etapa contempla el listado de propiedades, las fichas de detalle y los formularios de creación y edición con Bootstrap.
+
+También se implementó el formato de precios en pesos chilenos (CLP), sin decimales.
+
+## 1. Listado de Inmuebles y Formateo de Moneda
+
+Archivos: views.py y lista_inmuebles.html.
+
+### 1.1. Listado general y listado del propietario
+
+Se implementaron las vistas:
+
+- listar_inmuebles: muestra las propiedades disponibles.
+- mis_inmuebles: permite a cada arrendador administrar sus propiedades.
+
+### 1.2. Formateo de precios en CLP
+
+Se utiliza la siguiente expresión para mostrar puntos como separadores de miles:
+
+```python
+f"{int(precio_mensual):,}".replace(",", ".")
+```
+
+## 2. Ficha de Detalle del Inmueble (detalle_inmueble.html)
+
+Se configuró la vista detalle_inmueble utilizando get_object_or_404 para recuperar una propiedad mediante su identificador (pk).
+
+La plantilla se estructuró en dos columnas con Bootstrap:
+
+- Sección principal: descripción y ubicación del inmueble.
+- Panel secundario: precio en CLP y características de la propiedad.
+
+Se muestran las habitaciones, los baños, los estacionamientos y las superficies en metros cuadrados.
+
+## 3. Formularios de Creación y Edición de Inmuebles (form_inmueble.html)
+
+Se desarrollaron formularios basados en ModelForm para registrar y modificar propiedades.
+
+Se utiliza un bucle for field in form para generar dinámicamente los campos.
+
+Se incorporaron las siguientes funcionalidades:
+
+- Clases de Bootstrap, como form-control y form-select.
+- Visualización de errores de validación por campo.
+- Presentación consistente de los formularios.
