@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from gestion_inmuebles import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +28,7 @@ urlpatterns = [
     # Vista Principal
     path('', views.home, name='home'),
     
-    # Rutas de Autenticación
+    # Rutas APP
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
     path('register/', views.registro, name='register'),
@@ -37,4 +39,9 @@ urlpatterns = [
     path('inmuebles/editar/<int:pk>/', views.editar_inmueble, name='editar_inmueble'),
     path('inmuebles/eliminar/<int:pk>/', views.eliminar_inmueble, name='eliminar_inmueble'),
     path('inmueble/<int:pk>/', views.detalle_inmueble, name='detalle_inmueble'),
+    path('inmueble/<int:pk>/contactar/', views.contacto_arrendador,name='contacto_arrendador'),
+    path( 'mis-inmuebles/<int:inmueble_id>/cambiar-disponibilidad/', views.cambiar_disponibilidad, name='cambiar_disponibilidad'),    
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
