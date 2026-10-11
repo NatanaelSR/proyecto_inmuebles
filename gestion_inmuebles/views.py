@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from .forms import RegistroUsuarioForm, ActualizarUsuarioForm, InmuebleForm
-from .models import Perfil, Inmueble
+from .models import Perfil, Inmueble, ImagenInmueble
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -66,7 +66,6 @@ def detalle_inmueble(request, pk):
     inmueble.precio_formateado = f"{int(inmueble.precio_mensual):,}".replace(",", ".")
     return render(request, 'web/detalle_inmueble.html', {'inmueble': inmueble})
 
-
 # Vista para que el Arrendador vea SOLO sus inmuebles creados
 @login_required
 def mis_inmuebles(request):
@@ -77,8 +76,7 @@ def mis_inmuebles(request):
     inmuebles = Inmueble.objects.filter(propietario=request.user)
     return render(request, 'web/mis_inmuebles.html', {'inmuebles': inmuebles})
 
-
-# Agregar un nuevo inmueble (solo Arrendadores)
+# Crear un Inmueble (solo para Arrendadores)
 @login_required
 def crear_inmueble(request):
     if request.user.perfil.tipo_usuario != 'arrendador':
@@ -86,11 +84,18 @@ def crear_inmueble(request):
         return redirect('home')
 
     if request.method == 'POST':
-        form = InmuebleForm(request.POST)
+        form = InmuebleForm(request.POST, request.FILES)
         if form.is_valid():
             inmueble = form.save(commit=False)
-            inmueble.propietario = request.user  # Asignamos al usuario autenticado como propietario
+            inmueble.propietario = request.user # Asignamos el usuario autenticado como propietario
             inmueble.save()
+
+            for imagen in form.cleaned_data['imagenes_adicionales']:
+                ImagenInmueble.objects.create(
+                    inmueble=inmueble,
+                    imagen=imagen
+                )
+
             messages.success(request, '¡Inmueble publicado con éxito!')
             return redirect('mis_inmuebles')
     else:
@@ -98,23 +103,28 @@ def crear_inmueble(request):
 
     return render(request, 'web/form_inmueble.html', {'form': form, 'titulo': 'Agregar Nuevo Inmueble'})
 
-
-# Editar un inmueble existente (solo Arrendador propietario)
+# Editar  un inmueble (solo para Arrendadores)
 @login_required
 def editar_inmueble(request, pk):
     inmueble = get_object_or_404(Inmueble, pk=pk, propietario=request.user)
 
     if request.method == 'POST':
-        form = InmuebleForm(request.POST, instance=inmueble)
+        form = InmuebleForm(request.POST, request.FILES, instance=inmueble)
         if form.is_valid():
             form.save()
+            
+            for imagen in form.cleaned_data['imagenes_adicionales']:
+                ImagenInmueble.objects.create(
+                    inmueble=inmueble,
+                    imagen=imagen
+                )
+
             messages.success(request, 'Inmueble actualizado correctamente.')
             return redirect('mis_inmuebles')
     else:
         form = InmuebleForm(instance=inmueble)
 
     return render(request, 'web/form_inmueble.html', {'form': form, 'titulo': 'Editar Inmueble'})
-
 
 # Borrar un inmueble (solo Arrendador propietario)
 @login_required

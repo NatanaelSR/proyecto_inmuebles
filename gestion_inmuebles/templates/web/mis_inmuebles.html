@@ -22,7 +22,8 @@
             <tbody>
                 {% for inmueble in inmuebles %}
                 <tr>
-                    <td>{{ inmueble.nombre }}</td>
+                    <td> <a href="{% url 'detalle_inmueble' inmueble.id %}">
+                            {{ inmueble.nombre }} </a> </td>
                     <td>{{ inmueble.direccion }}</td>
                     <td>${{ inmueble.precio_mensual }}</td>
                     <td>

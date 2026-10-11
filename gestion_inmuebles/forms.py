@@ -35,22 +35,40 @@ class ActualizarUsuarioForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
         }
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+class MultipleFileField(forms.FileField):
+    def clean(self, data, initial=None):
+        if not data:
+            return []
+
+        if isinstance(data, (list, tuple)):
+            return [
+                super(MultipleFileField, self).clean(file, initial)
+                for file in data
+            ]
+
+        return [super().clean(data, initial)]
 
 class InmuebleForm(forms.ModelForm):
+    imagenes_adicionales = MultipleFileField(
+        widget=MultipleFileInput(
+            attrs={
+                'multiple': True,
+                'class': 'form-control'
+            }
+        ),
+        required=False,
+        label="Imágenes para el Carrusel (Puedes seleccionar varias)"
+    )
+
     class Meta:
         model = Inmueble
         fields = [
-            'nombre',
-            'descripcion',
-            'm2_construidos',
-            'm2_totales',
-            'estacionamientos',
-            'habitaciones',
-            'banos',
-            'direccion',
-            'precio_mensual',
-            'tipo_inmueble',
-            'comuna',
+            'nombre', 'descripcion', 'm2_construidos', 'm2_totales', 
+            'estacionamientos', 'habitaciones', 'banos', 'direccion', 
+            'precio_mensual', 'imagen_principal', 'comuna', 'tipo_inmueble'
         ]
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
@@ -62,6 +80,7 @@ class InmuebleForm(forms.ModelForm):
             'banos': forms.NumberInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
             'precio_mensual': forms.NumberInput(attrs={'class': 'form-control'}),
-            'tipo_inmueble': forms.Select(attrs={'class': 'form-select'}),
+            'imagen_principal': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'comuna': forms.Select(attrs={'class': 'form-select'}),
+            'tipo_inmueble': forms.Select(attrs={'class': 'form-select'}),
         }

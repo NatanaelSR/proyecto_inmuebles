@@ -9,6 +9,13 @@
         {% for inmueble in inmuebles %}
         <div class="col-md-4 mb-4">
             <div class="card h-100 shadow-sm">
+                {% if inmueble.imagen_principal %}
+                <img src="{{ inmueble.imagen_principal.url }}" class="card-img-top" alt="{{ inmueble.nombre }}"
+                    style="height: 200px; object-fit: cover;">
+                {% else %}
+                <img src="https://via.placeholder.com/400x200?text=Sin+Imagen" class="card-img-top" alt="Sin imagen"
+                    style="height: 200px; object-fit: cover;">
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{ inmueble.nombre }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ inmueble.tipo_inmueble }} - {{ inmueble.comuna }}</h6>

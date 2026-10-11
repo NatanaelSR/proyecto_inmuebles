@@ -9,6 +9,45 @@
                     <span class="badge bg-light text-dark fs-6">{{ inmueble.get_tipo_inmueble_display }}</span>
                 </div>
                 <div class="card-body">
+
+                    <!-- CARRUSEL DE IMÁGENES -->
+                    {% if inmueble.imagen_principal or inmueble.imagenes_carrusel.all %}
+                    <div id="carouselInmueble" class="carousel slide mb-4 shadow rounded overflow-hidden"
+                        data-bs-ride="carousel">
+                        <div class="carousel-inner" style="max-height: 450px;">
+                            <!-- Imagen Principal -->
+                            {% if inmueble.imagen_principal %}
+                            <div class="carousel-item active">
+                                <img src="{{ inmueble.imagen_principal.url }}" class="d-block w-100"
+                                    alt="{{ inmueble.nombre }}" style="object-fit: cover; height: 450px;">
+                            </div>
+                            {% endif %}
+
+                            <!-- Imágenes Adicionales del Carrusel -->
+                            {% for img in inmueble.imagenes_carrusel.all %}
+                            <div
+                                class="carousel-item {% if not inmueble.imagen_principal and forloop.first %}active{% endif %}">
+                                <img src="{{ img.imagen.url }}" class="d-block w-100" alt="Foto adicional"
+                                    style="object-fit: cover; height: 450px;">
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Controles de navegación del carrusel -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselInmueble"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselInmueble"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                    <!-- FIN DEL CARRUSEL -->
+
                     <div class="row">
                         <!-- Columna de Información Principal -->
                         <div class="col-md-7">
@@ -34,11 +73,11 @@
                             <ul class="list-group list-group-flush mb-4">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span><i class="fas fa-bed me-2"></i> Habitaciones</span>
-                                    <span ">{{ inmueble.habitaciones }}</span>
+                                    <span>{{ inmueble.habitaciones }}</span>
                                 </li>
-                                <li class=" list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fas fa-bath me-2"></i> Baños</span>
-                                        <span>{{ inmueble.banos }}</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="fas fa-bath me-2"></i> Baños</span>
+                                    <span>{{ inmueble.banos }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span><i class="fas fa-parking me-2"></i> Estacionamientos</span>
@@ -62,8 +101,8 @@
                         </a>
                         {% if user.is_authenticated and user == inmueble.propietario %}
                         <div>
-                            <a href="#" class="btn btn-warning me-2">Editar</a>
-                            <a href="#" class="btn btn-danger">Eliminar</a>
+                            <a href="{% url 'editar_inmueble' inmueble.id %}" class="btn btn-warning me-2">Editar</a>
+                            <a href="{% url 'eliminar_inmueble' inmueble.id %}" class="btn btn-danger">Eliminar</a>
                         </div>
                         {% endif %}
                     </div>
