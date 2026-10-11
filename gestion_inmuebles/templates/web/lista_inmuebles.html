@@ -3,8 +3,26 @@
 {% block content %}
 <div class="container mt-4 mb-5">
     <h2 class="mb-4">Propiedades Disponibles para Arriendo</h2>
+    <form method="GET" class="row g-3 mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="col-md-5">
+            <label for="region" class="form-label fw-bold">Región</label>
+            <input type="text" name="region" id="region" class="form-control" value="{{ region_query }}"
+                placeholder="Ej: Valparaíso">
+        </div>
 
+        <div class="col-md-5">
+            <label for="comuna" class="form-label fw-bold">Comuna</label>
+            <input type="text" name="comuna" id="comuna" class="form-control" value="{{ comuna_query }}"
+                placeholder="Ej: Viña del Mar">
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end gap-2">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <a href="{% url 'listar_inmuebles' %}" class="btn btn-outline-secondary">Limpiar</a>
+        </div>
+    </form>
     <div class="row">
+
         {% if inmuebles %}
         {% for inmueble in inmuebles %}
         <div class="col-md-4 mb-4">
@@ -38,9 +56,15 @@
         {% endfor %}
         {% else %}
         <div class="col-12">
+            {% if region_query or comuna_query %}
+            <div class="alert alert-info" role="alert">
+                No se encontraron inmuebles con los filtros seleccionados.
+            </div>
+            {% else %}
             <div class="alert alert-warning" role="alert">
                 No hay inmuebles disponibles en este momento.
             </div>
+            {% endif %}
         </div>
         {% endif %}
     </div>

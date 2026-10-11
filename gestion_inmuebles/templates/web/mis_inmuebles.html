@@ -6,7 +6,30 @@
         <h2>Mis Propiedades Publicadas</h2>
         <a href="{% url 'crear_inmueble' %}" class="btn btn-primary">+ Agregar Nuevo Inmueble</a>
     </div>
+    <form method="GET" class="row g-3 mb-4 p-3 bg-light rounded shadow-sm">
+        <div class="col-md-4">
+            <label for="region" class="form-label fw-bold">Región</label>
+            <input type="text" name="region" id="region" class="form-control" value="{{ region_query }}"
+                placeholder="Filtrar por región">
+        </div>
 
+        <div class="col-md-4">
+            <label for="comuna" class="form-label fw-bold">Comuna</label>
+            <input type="text" name="comuna" id="comuna" class="form-control" value="{{ comuna_query }}"
+                placeholder="Filtrar por comuna">
+        </div>
+
+        <div class="col-md-4">
+            <label for="direccion" class="form-label fw-bold">Dirección</label>
+            <input type="text" name="direccion" id="direccion" class="form-control" value="{{ direccion_query }}"
+                placeholder="Filtrar por dirección">
+        </div>
+
+        <div class="col-12 d-flex justify-content-end gap-2">
+            <a href="{% url 'mis_inmuebles' %}" class="btn btn-secondary">Limpiar</a>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
     {% if inmuebles %}
     <div class="table-responsive">
         <table class="table table-striped table-hover align-middle">
@@ -43,9 +66,16 @@
         </table>
     </div>
     {% else %}
+    {% if region_query or comuna_query or direccion_query %}
     <div class="alert alert-info" role="alert">
-        Aún no tienes inmuebles publicados. ¡Haz clic en el botón superior para agregar el primero!
+        No se encontraron inmuebles con los filtros seleccionados.
     </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        Aún no tienes inmuebles publicados.
+        ¡Haz clic en el botón superior para agregar el primero!
+    </div>
+    {% endif %}
     {% endif %}
 </div>
 {% endblock %}

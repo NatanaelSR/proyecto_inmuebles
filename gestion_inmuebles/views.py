@@ -53,11 +53,27 @@ def perfil_usuario(request):
 # Ver oferta de inmuebles disponibles (para Arrendatarios)
 @login_required
 def listar_inmuebles(request):
+    region_query = request.GET.get('region', '').strip()
+    comuna_query = request.GET.get('comuna', '').strip()
+
     inmuebles = Inmueble.objects.all()
+
+    if region_query:
+        inmuebles = inmuebles.filter(comuna__region__nombre__icontains=region_query)
+
+    if comuna_query:
+        inmuebles = inmuebles.filter(comuna__nombre__icontains=comuna_query )
+
     for inmueble in inmuebles:
-        inmueble.precio_formateado = f"{int(inmueble.precio_mensual):,}".replace(",", ".")
-        
-    return render(request, 'web/lista_inmuebles.html', {'inmuebles': inmuebles})
+        inmueble.precio_formateado = (
+            f"{int(inmueble.precio_mensual):,}".replace(",", ".")
+        )
+
+    return render(request, 'web/lista_inmuebles.html', {
+        'inmuebles': inmuebles,
+        'region_query': region_query,
+        'comuna_query': comuna_query,
+    })
 
 #Ver detalle de un inmueble específico
 @login_required
@@ -70,11 +86,38 @@ def detalle_inmueble(request, pk):
 @login_required
 def mis_inmuebles(request):
     if request.user.perfil.tipo_usuario != 'arrendador':
-        messages.error(request, 'Acceso denegado: Solo los arrendadores pueden gestionar propiedades.')
+        messages.error(
+            request,
+            'Acceso denegado: Solo los arrendadores pueden gestionar propiedades.'
+        )
         return redirect('home')
-    
-    inmuebles = Inmueble.objects.filter(propietario=request.user)
-    return render(request, 'web/mis_inmuebles.html', {'inmuebles': inmuebles})
+
+    region_query = request.GET.get('region', '').strip()
+    comuna_query = request.GET.get('comuna', '').strip()
+    direccion_query = request.GET.get('direccion', '').strip()
+
+    inmuebles = Inmueble.objects.filter(propietario=request.user )
+
+    if region_query:
+        inmuebles = inmuebles.filter(comuna__region__nombre__icontains=region_query)
+
+    if comuna_query:
+        inmuebles = inmuebles.filter(comuna__nombre__icontains=comuna_query )
+
+    if direccion_query:
+        inmuebles = inmuebles.filter(direccion__icontains=direccion_query)
+
+    for inmueble in inmuebles:
+        inmueble.precio_formateado = (
+            f"{int(inmueble.precio_mensual):,}".replace(",", ".")
+        )
+
+    return render(request, 'web/mis_inmuebles.html', {
+        'inmuebles': inmuebles,
+        'region_query': region_query,
+        'comuna_query': comuna_query,
+        'direccion_query': direccion_query,
+    })
 
 # Crear un Inmueble (solo para Arrendadores)
 @login_required
