@@ -1,16 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
-from .forms import RegistroUsuarioForm, ActualizarUsuarioForm, InmuebleForm
-from .models import Perfil, Inmueble, ImagenInmueble
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
+from django.views.decorators.http import require_POST
 
-# Vista principal (Home)
+from .forms import RegistroUsuarioForm, ActualizarUsuarioForm, InmuebleForm
+from .models import Perfil, Inmueble, ImagenInmueble
+
+# Inicio (Home)
 def home(request):
     return render(request, 'web/home.html')
 
-# Vista y formulario de registro
+# Formulario de registro
 def registro(request):
     if request.method == 'POST':
         form = RegistroUsuarioForm(request.POST)
@@ -36,7 +40,7 @@ def registro(request):
         form = RegistroUsuarioForm()
     return render(request, 'registration/register.html', {'form': form})
 
-# Vista para que el usuario vea y actualice su perfil
+# Ver y actualizar su perfil
 @login_required
 def perfil_usuario(request):
     if request.method == 'POST':
@@ -50,13 +54,12 @@ def perfil_usuario(request):
 
     return render(request, 'web/perfil.html', {'form': form})
 
-# Ver oferta de inmuebles disponibles (para Arrendatarios)
-@login_required
+# Ver oferta de inmuebles disponibles
 def listar_inmuebles(request):
     region_query = request.GET.get('region', '').strip()
     comuna_query = request.GET.get('comuna', '').strip()
 
-    inmuebles = Inmueble.objects.all()
+    inmuebles = Inmueble.objects.filter(disponible=True)
 
     if region_query:
         inmuebles = inmuebles.filter(comuna__region__nombre__icontains=region_query)
@@ -180,3 +183,97 @@ def eliminar_inmueble(request, pk):
         return redirect('mis_inmuebles')
 
     return render(request, 'web/confirmar_eliminar.html', {'inmueble': inmueble})
+
+# Contactar al Arrendador (solo para Arrendatarios)
+@login_required
+def contacto_arrendador(request, pk):
+    inmueble = get_object_or_404(Inmueble, pk=pk)
+
+    if request.user.perfil.tipo_usuario != 'arrendatario':
+        messages.error(
+            request,
+            'Solo los arrendatarios pueden contactar a los propietarios.'
+        )
+        return redirect('detalle_inmueble', pk=inmueble.pk)
+
+    propietario = inmueble.propietario
+
+    if request.method == 'POST':
+        mensaje = request.POST.get('mensaje', '').strip()
+
+        if not mensaje:
+            messages.error(request, 'Debes escribir un mensaje.')
+        elif not propietario.email:
+            messages.error(
+                request,
+                'El propietario no tiene un correo registrado.'
+            )
+        else:
+            asunto = f'Nuevo interesado en tu inmueble: {inmueble.nombre}'
+            nombre_arrendatario = request.user.get_full_name() or request.user.username
+            nombre_propietario = propietario.get_full_name() or propietario.username
+
+            cuerpo_html = f"""
+            <h2>Nuevo interesado en tu inmueble</h2>
+            <p>Hola {nombre_propietario},</p>
+            <p>{nombre_arrendatario} está interesado en tu inmueble.</p>
+            <p><strong>Inmueble:</strong> {inmueble.nombre}</p>
+            <p><strong>Dirección:</strong> {inmueble.direccion}</p>
+            <p><strong>Correo:</strong> {request.user.email or 'No registrado'}</p>
+            <h3>Mensaje del interesado</h3>
+            <p>{mensaje}</p>
+            <p>Este mensaje fue enviado desde la plataforma inmobiliaria.</p>
+            """
+
+            cuerpo_texto = strip_tags(cuerpo_html)
+
+            try:
+                send_mail(
+                    subject=asunto,
+                    message=cuerpo_texto,
+                    from_email=None,
+                    recipient_list=[propietario.email],
+                    fail_silently=False,
+                    html_message=cuerpo_html,
+                )
+                messages.success(request, 'Tu mensaje fue enviado al propietario correctamente.')
+                return redirect('detalle_inmueble', pk=inmueble.pk)
+            
+            except Exception as e:
+                messages.error(request, 'No se pudo enviar el correo. Inténtalo nuevamente.')
+
+    return render(
+        request,
+        'web/contacto_arrendador.html',
+        {
+            'inmueble': inmueble,
+            'propietario': propietario,
+        }
+    )
+
+# Cambiar disponibilidad de un inmueble (solo para Arrendadores)
+@login_required
+@require_POST
+def cambiar_disponibilidad(request, inmueble_id):
+    if request.user.perfil.tipo_usuario != 'arrendador':
+        messages.error(
+            request,
+            'Acceso denegado: Solo los arrendadores pueden gestionar propiedades.'
+        )
+        return redirect('home')
+
+    inmueble = get_object_or_404(
+        Inmueble,
+        pk=inmueble_id,
+        propietario=request.user
+    )
+
+    inmueble.disponible = not inmueble.disponible
+    inmueble.save(update_fields=['disponible'])
+
+    if inmueble.disponible:
+        messages.success(request, 'El inmueble ahora está disponible.')
+    else:
+        messages.success(request, 'El inmueble se ha marcado como ocupado.')
+
+    return redirect('mis_inmuebles')

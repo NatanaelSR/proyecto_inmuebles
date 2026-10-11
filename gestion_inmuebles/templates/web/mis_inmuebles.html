@@ -57,8 +57,16 @@
                         {% endif %}
                     </td>
                     <td class="text-center">
-                        <a href="{% url 'editar_inmueble' inmueble.pk %}" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="{% url 'eliminar_inmueble' inmueble.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                        <form method="POST" action="{% url 'cambiar_disponibilidad' inmueble.id %}" class="d-inline">
+                            {% csrf_token %}
+                            {% if inmueble.disponible %}
+                            <button type="submit" class="btn btn-warning btn-sm">Marcar como ocupado</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-success btn-sm">Marcar como disponible</button>
+                            {% endif %}
+                        </form>
+                        <a href="{% url 'editar_inmueble' inmueble.pk %}" class="btn btn-primary btn-sm">Editar</a>
+                        <a href="{% url 'eliminar_inmueble' inmueble.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
                     </td>
                 </tr>
                 {% endfor %}

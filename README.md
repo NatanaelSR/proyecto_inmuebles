@@ -342,3 +342,73 @@ Se incorporaron las siguientes funcionalidades:
 - Clases de Bootstrap, como form-control y form-select.
 - Visualización de errores de validación por campo.
 - Presentación consistente de los formularios.
+
+# Hito 4 - Parte 3 - Adicionales: Gestión de Imágenes, Búsquedas y Contacto entre Usuarios
+
+## 1. Gestión de Imágenes (Imagen Principal y Carrusel)
+
+Actualización del Modelo de Datos:
+
+- Se incorporó el campo `imagen_principal` en el modelo `Inmueble` para la foto de portada o principal de la propiedad.
+- Se creó el modelo relacional `ImagenInmueble` vinculado por llave foránea al inmueble, permitiendo asociar múltiples imágenes adicionales para alimentar la funcionalidad de carrusel en la vista de detalle.
+
+Procesamiento de Archivos Múltiples:
+
+- Se configuraron las vistas de creación (`crear_inmueble`) y edición (`editar_inmueble`) para capturar las cargas múltiples de archivos utilizando `request.FILES.getlist('imagenes_adicionales')`, instanciando y guardando dinámicamente cada registro en `ImagenInmueble`.
+
+Configuración del Formulario y Plantillas:
+
+- Se aseguró el uso correcto del atributo `enctype="multipart/form-data"` en la etiqueta `<form>` de las plantillas HTML para permitir la transferencia binaria de archivos de imagen.
+- Se estructuró el input de selección múltiple con el atributo `multiple` para habilitar la selección simultánea de varias fotografías en la interfaz de usuario.
+- Se validaron las rutas de almacenamiento local mediante `MEDIA_URL` y `MEDIA_ROOT` para asegurar que las imágenes se guarden y sirvan correctamente desde el servidor de desarrollo.
+
+## 2. Filtros de Búsqueda Avanzados
+
+Integración con el ORM de PostgreSQL y Relaciones de Base de Datos:
+
+- Se utilizaron los parámetros de la URL mediante `request.GET` para capturar los criterios ingresados por los usuarios de forma dinámica.
+- Se implementaron consultas estructuradas del ORM utilizando `icontains` (búsqueda insensible a mayúsculas/minúsculas), conectando las tablas mediante relaciones de clave foránea (`comuna__region__nombre` para región y `comuna__nombre` para comuna).
+
+-Vista General de Listado (`listar_inmuebles`):
+
+- Se añadió un formulario de búsqueda que permite a los usuarios filtrar el catálogo completo de propiedades escribiendo el nombre de la **región** o la **comuna**.
+
+Panel de Control del Arrendador (`mis_inmuebles`):
+
+- Se amplió el buscador interno para permitir filtrar el inventario personal combinando tres criterios simultáneamente: **región**, **comuna** y **dirección** específica (`direccion__icontains`).
+
+## 3. Contacto entre Arrendatarios y Arrendadores
+
+Formulario de Contacto:
+
+- Se implementó una vista para que los arrendatarios puedan contactar al propietario desde la ficha de detalle del inmueble.
+- Se incorporó un formulario para ingresar el mensaje que se desea enviar al arrendador.
+
+Envío de Correos Electrónicos:
+
+- Se configuró el envío de correos mediante SMTP utilizando el servicio Brevo.
+- Se utilizaron variables de entorno en un archivo `.env` para almacenar las credenciales de correo, evitando incluirlas directamente en el código fuente.
+- Se implementó el envío de un correo con los datos del inmueble, la información del interesado y el mensaje ingresado.
+
+Validaciones y Notificaciones:
+
+- Se restringió la funcionalidad a usuarios autenticados con perfil de arrendatario.
+- Se incorporaron validaciones para comprobar que el mensaje no esté vacío y que el propietario tenga un correo electrónico registrado.
+- Se utilizaron `django.contrib.messages` para gestionar las notificaciones de éxito y error.
+- Se integró un modal de Bootstrap en la plantilla base para mostrar las notificaciones al usuario.
+
+### 4. Gestión de Disponibilidad de Inmuebles
+
+Se incorporó la funcionalidad para que los arrendadores puedan cambiar el estado de disponibilidad de sus propiedades desde la vista `mis_inmuebles`.
+
+- **Marcar como ocupado:** permite indicar que una propiedad ya fue arrendada o no se encuentra disponible.
+- **Marcar como disponible:** permite volver a publicar una propiedad que anteriormente estaba marcada como ocupada.
+- **Persistencia en la base de datos:** los cambios se guardan utilizando el campo `disponible` del modelo `Inmueble`.
+- **Control de acceso:** únicamente los arrendadores pueden ejecutar esta acción y solo pueden modificar el estado de los inmuebles que les pertenecen.
+- **Listado público:** la vista `listar_inmuebles` muestra únicamente los inmuebles cuyo campo `disponible` está establecido en `True`.
+- **Administración de propiedades:** los inmuebles ocupados siguen apareciendo en la vista `mis_inmuebles`, permitiendo al arrendador editarlos, eliminarlos o volver a marcarlos como disponibles.
+- **Seguridad del formulario:** se utiliza el método POST y el token CSRF para proteger la operación de cambio de estado.
+
+Esta funcionalidad permite mantener actualizado el catálogo público sin eliminar las propiedades de la base de datos y facilita la administración de los inmuebles publicados por cada arrendador.
+
+---

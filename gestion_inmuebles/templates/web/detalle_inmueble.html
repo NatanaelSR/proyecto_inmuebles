@@ -99,16 +99,28 @@
                         <a href="{% url 'listar_inmuebles' %}" class="btn btn-secondary">
                             <i class="fas fa-arrow-left me-1"></i> Volver al listado
                         </a>
-                        {% if user.is_authenticated and user == inmueble.propietario %}
+
                         <div>
+                            {% if user.is_authenticated and user == inmueble.propietario %}
                             <a href="{% url 'editar_inmueble' inmueble.id %}" class="btn btn-warning me-2">Editar</a>
                             <a href="{% url 'eliminar_inmueble' inmueble.id %}" class="btn btn-danger">Eliminar</a>
+                            {% endif %}
+
+                            {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-sign-in-alt me-1"></i> Inicia sesión para contactar
+                            </a>
+                            {% elif user.perfil.tipo_usuario == 'arrendatario' %}
+                            <a href="{% url 'contacto_arrendador' inmueble.pk %}" class="btn btn-primary">
+                                <i class="fas fa-envelope me-1"></i> Contactar arrendador
+                            </a>
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
