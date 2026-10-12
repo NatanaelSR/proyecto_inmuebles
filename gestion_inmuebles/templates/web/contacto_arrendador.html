@@ -1,28 +1,34 @@
 {% extends "base.html" %}
 
+{% block title %}Contactar al Arrendador - TuNido{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-    <div class="card shadow-sm mx-auto" style="max-width: 700px;">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0"><i class="fas fa-envelope me-2"></i>Contactar al arrendador</h4>
+<div class="container py-4">
+    <div class="card shadow-sm border mx-auto" style="max-width: 700px;">
+        <div class="card-header tn-card-header py-3 px-4">
+            <h4 class="mb-0 fs-5 fw-bold">Contactar al arrendador</h4>
         </div>
-        <div class="card-body p-4">
-            <h5>{{ inmueble.nombre }}</h5>
-            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i>{{ inmueble.direccion }}</p>
-            <p><strong>Propietario:</strong> {{ propietario.get_full_name|default:propietario.username }}</p>
-            <hr>
+        <div class="card-body p-4 p-md-5">
+            <div class="p-3 bg-light rounded-3 border mb-4">
+                <h5 class="fw-bold mb-1">{{ inmueble.nombre }}</h5>
+                <p class="text-muted small mb-2">{{ inmueble.direccion }}</p>
+                <p class="mb-0"><strong>Propietario:</strong>
+                    {{ propietario.get_full_name|default:propietario.username }}</p>
+            </div>
+
+            <hr class="my-4">
+
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="mensaje" class="form-label">Tu mensaje</label>
+                    <label for="mensaje" class="form-label fw-bold small text-muted">Tu mensaje</label>
                     <textarea id="mensaje" name="mensaje" class="form-control" rows="6"
                         placeholder="Hola, estoy interesado en este inmueble..." required></textarea>
                     <div class="form-text">Tu mensaje será enviado al correo del propietario.</div>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
                     <a href="{% url 'detalle_inmueble' inmueble.pk %}" class="btn btn-outline-secondary">Volver</a>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i>Enviar
-                        mensaje</button>
+                    <button type="submit" class="btn btn-tn-primary px-4">Enviar mensaje</button>
                 </div>
             </form>
         </div>

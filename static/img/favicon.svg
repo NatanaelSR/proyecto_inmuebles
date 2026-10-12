@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="favBgBirdhouse" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16324F"/>
+      <stop offset="100%" stop-color="#0E2135"/>
+    </linearGradient>
+    <linearGradient id="favGoldBirdhouse" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E5C8"/>
+      <stop offset="50%" stop-color="#D6B77A"/>
+      <stop offset="100%" stop-color="#B8934E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Contenedor App Icon -->
+  <rect width="64" height="64" rx="16" fill="url(#favBgBirdhouse)"/>
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="#D6B77A" stroke-width="1.2" stroke-opacity="0.3"/>
+
+  <!-- Pajarera Estilizada Limpia -->
+  <path d="M12 25 L32 12 L52 25" fill="none" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M18 26.5 V48 C18 49.5 19.2 50.5 20.8 50.5 H43.2 C44.8 50.5 46 49.5 46 48 V26.5" 
+        fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Orificio circular clásico de entrada -->
+  <circle cx="32" cy="35" r="7" fill="url(#favGoldBirdhouse)"/>
+  <circle cx="32" cy="35" r="4.6" fill="#0E2135"/>
+
+  <!-- Argolla superior para colgar -->
+  <path d="M30 11 C30 9.8 30.8 9 32 9 C33.2 9 34 9.8 34 11" fill="none" stroke="url(#favGoldBirdhouse)" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

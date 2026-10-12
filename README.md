@@ -411,4 +411,14 @@ Se incorporó la funcionalidad para que los arrendadores puedan cambiar el estad
 
 Esta funcionalidad permite mantener actualizado el catálogo público sin eliminar las propiedades de la base de datos y facilita la administración de los inmuebles publicados por cada arrendador.
 
+## Hito 4 - Parte 4 - Adiccionales: Mejoras Visuales y Consistencia de UI/UX
+
+Se implementó una identidad de marca cohesiva y se aplicaron mejoras visuales integrales para elevar la experiencia de usuario y estandarizar la interfaz de la plataforma TuNido.
+
+- Estandarización de Marca e Identidad Visual: Unificación de la paleta corporativa (Azul Marino y Dorado TuNido), tipografía y estados visuales (píldoras, botones y formateo de precios) en todos los formularios y tablas del sistema.
+
+- Refactorización de Interfaz y Formularios (UI): Rediseño limpio de las pantallas de Login, Registro, Gestión de inmuebles y Confirmación de eliminación (con miniatura de propiedad).
+
+- Optimización de Experiencia de Usuario Responsiva (UX): Control de desbordamientos y comportamiento de botones en pantallas móviles para asegurar una navegación fluida sin deformar la maquetación.
+
 ---
