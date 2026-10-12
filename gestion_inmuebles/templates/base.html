@@ -31,20 +31,7 @@
         {% endblock %}
     </main>
 
-    <!-- Footer Compartido -->
-    <footer class="tn-footer py-4 mt-auto">
-        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 small">
-            <div class="d-flex align-items-center gap-2">
-                <img src="{% static 'img/favicon.svg' %}" alt="TuNido" height="22">
-                <span>© 2025 TuNido. Encuentra tu lugar.</span>
-            </div>
-            <div class="d-flex gap-3">
-                <a href="#">Términos y Condiciones</a>
-                <a href="#">Políticas de Privacidad</a>
-                <a href="#">Soporte</a>
-            </div>
-        </div>
-    </footer>
+    {% include 'includes/footer.html' %}
 
     {% if messages %}
     {% for message in messages %}
