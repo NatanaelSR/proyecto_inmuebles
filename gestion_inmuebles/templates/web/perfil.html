@@ -3,26 +3,30 @@
 {% block title %}Mi Perfil{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
+<div class="row justify-content-center my-4">
     <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h3 class="card-title mb-3">Mi Perfil de Usuario</h3>
+        <div class="card shadow-sm border">
+            <div class="card-body p-4 p-md-5">
+                <h3 class="card-title fw-bold mb-4">Mi Perfil de Usuario</h3>
 
                 <!-- Despliegue de datos básicos -->
                 <ul class="list-group mb-4">
-                    <li class="list-group-item"><strong>Usuario:</strong> {{ request.user.username }}</li>
-                    <li class="list-group-item"><strong>Correo:</strong> {{ request.user.email }}</li>
-                    <li class="list-group-item text-capitalize">
-                        <strong>Rol en el sistema:</strong>
-                        <span class="badge bg-primary">{{ request.user.perfil.tipo_usuario }}</span>
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <span><strong>Usuario:</strong> {{ request.user.username }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <span><strong>Correo:</strong> {{ request.user.email }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3 text-capitalize">
+                        <span><strong>Rol en el sistema:</strong></span>
+                        <span class="badge bg-secondary">{{ request.user.perfil.tipo_usuario }}</span>
                     </li>
                 </ul>
 
-                <hr>
+                <hr class="my-4">
 
                 <!-- Formulario para modificar datos personales -->
-                <h5 class="mb-3">Modificar Mis Datos</h5>
+                <h5 class="fw-bold mb-3">Modificar Mis Datos</h5>
 
                 {% if messages %}
                 {% for message in messages %}
@@ -33,7 +37,9 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-tn-primary px-4">Guardar Cambios</button>
+                    </div>
                 </form>
             </div>
         </div>

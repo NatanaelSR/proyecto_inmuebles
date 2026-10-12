@@ -1,67 +1,85 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-4 mb-5">
-    <h2 class="mb-4">Propiedades Disponibles para Arriendo</h2>
-    <form method="GET" class="row g-3 mb-4 p-3 bg-light rounded shadow-sm">
+<div class="container-fluid px-0 mb-5">
+    <h2 class="mb-4 fw-bold">Propiedades Disponibles para Arriendo</h2>
+
+    <!-- Filtros de búsqueda con Bootstrap Grid -->
+    <form method="GET" class="row g-3 mb-4 p-4 bg-white rounded-3 shadow-sm border align-items-end">
         <div class="col-md-5">
-            <label for="region" class="form-label fw-bold">Región</label>
+            <label for="region" class="form-label fw-bold small text-muted">Región</label>
             <input type="text" name="region" id="region" class="form-control" value="{{ region_query }}"
                 placeholder="Ej: Valparaíso">
         </div>
-
         <div class="col-md-5">
-            <label for="comuna" class="form-label fw-bold">Comuna</label>
+            <label for="comuna" class="form-label fw-bold small text-muted">Comuna</label>
             <input type="text" name="comuna" id="comuna" class="form-control" value="{{ comuna_query }}"
                 placeholder="Ej: Viña del Mar">
         </div>
-
-        <div class="col-md-2 d-flex align-items-end gap-2">
-            <button type="submit" class="btn btn-primary">Buscar</button>
+        <div class="col-md-2 d-flex gap-2">
+            <button type="submit" class="btn btn-tn-primary w-100">Buscar</button>
             <a href="{% url 'listar_inmuebles' %}" class="btn btn-outline-secondary">Limpiar</a>
         </div>
     </form>
-    <div class="row">
 
+    <!-- Grilla responsive de Cards con dimensiones visuales controladas -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% if inmuebles %}
         {% for inmueble in inmuebles %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                {% if inmueble.imagen_principal %}
-                <img src="{{ inmueble.imagen_principal.url }}" class="card-img-top" alt="{{ inmueble.nombre }}"
-                    style="height: 200px; object-fit: cover;">
-                {% else %}
-                <img src="https://via.placeholder.com/400x200?text=Sin+Imagen" class="card-img-top" alt="Sin imagen"
-                    style="height: 200px; object-fit: cover;">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title text-primary">{{ inmueble.nombre }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ inmueble.tipo_inmueble }} - {{ inmueble.comuna }}</h6>
-                    <p class="card-text">{{ inmueble.descripcion|truncatechars:100 }}</p>
-                    <ul class="list-unstyled small text-muted mb-3">
-                        <li><strong>Dirección:</strong> {{ inmueble.direccion }}</li>
-                        <li><strong>Habitaciones:</strong> {{ inmueble.habitaciones }} |
-                            <strong>Baños:</strong> {{inmueble.banos }}
-                        </li>
+        <div class="col">
+            <div class="card h-100 shadow-sm tn-property-card overflow-hidden">
+                <div class="position-relative tn-card-img-container">
+                    {% if inmueble.imagen_principal %}
+                    <img src="{{ inmueble.imagen_principal.url }}" class="tn-card-img" alt="{{ inmueble.nombre }}">
+                    {% else %}
+                    <img src="{% static 'img/propiedad-placeholder.svg' %}" class="tn-card-img" alt="Sin imagen">
+                    {% endif %}
+
+                    {% if inmueble.disponible %}
+                    <span class="badge bg-success tn-pill-badge">Disponible</span>
+                    {% else %}
+                    <span class="badge bg-secondary tn-pill-badge">No disponible</span>
+                    {% endif %}
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <span class="badge bg-light text-dark border align-self-start mb-2">
+                        {{ inmueble.tipo_inmueble}}</span>
+                    <h5 class="card-title fw-bold tn-card-title mb-1">
+                        <a href="{% url 'detalle_inmueble' inmueble.id %}">{{ inmueble.nombre }}</a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted small">{{ inmueble.comuna }}</h6>
+                    <p class="card-text text-muted small tn-card-desc mb-3">{{ inmueble.descripcion|truncatechars:100 }}
+                    </p>
+
+                    <ul class="list-unstyled small text-muted mb-3 border-top border-bottom py-2">
+                        <li class="text-truncate"><strong>Dirección:</strong> {{ inmueble.direccion }}</li>
+                        <li><strong>Habitaciones:</strong> {{ inmueble.habitaciones }} | <strong>Baños:</strong>
+                            {{ inmueble.banos }}</li>
                         <li><strong>Superficie:</strong> {{ inmueble.m2_construidos }} m² construidos</li>
                     </ul>
-                    <h5 class="text-success">${{ inmueble.precio_formateado }} CLP / mes</h5>
-                </div>
-                <div class="card-footer bg-transparent border-top-0">
-                    <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-outline-primary w-100">Ver
-                        Detalles</a>
+
+                    <div class="mt-auto pt-2">
+                        <h5 class="tn-price-text mb-3">${{ inmueble.precio_formateado }} CLP / mes</h5>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-tn-outline w-100">Ver
+                            Detalles</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-tn-outline w-100">Inicia sesión para ver detalles</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
         {% endfor %}
         {% else %}
-        <div class="col-12">
+        <div class="col-12 w-100">
             {% if region_query or comuna_query %}
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info text-center py-4 rounded-3" role="alert">
                 No se encontraron inmuebles con los filtros seleccionados.
             </div>
             {% else %}
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning text-center py-4 rounded-3" role="alert">
                 No hay inmuebles disponibles en este momento.
             </div>
             {% endif %}

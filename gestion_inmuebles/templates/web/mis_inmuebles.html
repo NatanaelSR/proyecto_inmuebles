@@ -1,87 +1,104 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4 mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Mis Propiedades Publicadas</h2>
-        <a href="{% url 'crear_inmueble' %}" class="btn btn-primary">+ Agregar Nuevo Inmueble</a>
+<div class="container-fluid px-0 mb-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Mis Propiedades Publicadas</h2>
+            <p class="text-muted mb-0 small">Administra tus inmuebles y actualiza el estado de disponibilidad pública.
+            </p>
+        </div>
+        <!-- Boton Agregar inmueble -->
+        <a href="{% url 'crear_inmueble' %}" class="btn btn-tn-primary">+ Agregar Nuevo Inmueble</a>
     </div>
-    <form method="GET" class="row g-3 mb-4 p-3 bg-light rounded shadow-sm">
+
+    <!-- Filtros de búsqueda -->
+    <form method="GET" class="row g-3 mb-4 p-3 bg-white rounded-3 shadow-sm border align-items-end">
         <div class="col-md-4">
-            <label for="region" class="form-label fw-bold">Región</label>
+            <label for="region" class="form-label fw-bold small text-muted">Región</label>
             <input type="text" name="region" id="region" class="form-control" value="{{ region_query }}"
                 placeholder="Filtrar por región">
         </div>
-
         <div class="col-md-4">
-            <label for="comuna" class="form-label fw-bold">Comuna</label>
+            <label for="comuna" class="form-label fw-bold small text-muted">Comuna</label>
             <input type="text" name="comuna" id="comuna" class="form-control" value="{{ comuna_query }}"
                 placeholder="Filtrar por comuna">
         </div>
-
         <div class="col-md-4">
-            <label for="direccion" class="form-label fw-bold">Dirección</label>
+            <label for="direccion" class="form-label fw-bold small text-muted">Dirección</label>
             <input type="text" name="direccion" id="direccion" class="form-control" value="{{ direccion_query }}"
                 placeholder="Filtrar por dirección">
         </div>
-
         <div class="col-12 d-flex justify-content-end gap-2">
-            <a href="{% url 'mis_inmuebles' %}" class="btn btn-secondary">Limpiar</a>
-            <button type="submit" class="btn btn-primary">Buscar</button>
+            <a href="{% url 'mis_inmuebles' %}" class="btn btn-outline-secondary">Limpiar</a>
+            <button type="submit" class="btn btn-tn-primary">Buscar</button>
         </div>
     </form>
+
     {% if inmuebles %}
-    <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    <th>Precio Mensual</th>
-                    <th>Disponible</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for inmueble in inmuebles %}
-                <tr>
-                    <td> <a href="{% url 'detalle_inmueble' inmueble.id %}">
-                            {{ inmueble.nombre }} </a> </td>
-                    <td>{{ inmueble.direccion }}</td>
-                    <td>${{ inmueble.precio_mensual }}</td>
-                    <td>
-                        {% if inmueble.disponible %}
-                        <span class="badge bg-success">Disponible</span>
-                        {% else %}
-                        <span class="badge bg-secondary">No disponible</span>
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
-                        <form method="POST" action="{% url 'cambiar_disponibilidad' inmueble.id %}" class="d-inline">
-                            {% csrf_token %}
+    <div class="card border shadow-sm overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="tn-card-header">
+                    <tr>
+                        <th class="py-3 px-3">Nombre</th>
+                        <th class="py-3 px-3">Dirección</th>
+                        <th class="py-3 px-3">Precio Mensual</th>
+                        <th class="py-3 px-3">Disponible</th>
+                        <th class="py-3 px-3 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inmueble in inmuebles %}
+                    <tr>
+                        <td class="px-3">
+                            <a href="{% url 'detalle_inmueble' inmueble.id %}" class="fw-bold text-decoration-none"
+                                style="color: var(--tn-primary);">
+                                {{ inmueble.nombre }}
+                            </a>
+                        </td>
+                        <td class="px-3 text-muted">{{ inmueble.direccion }}</td>
+                        <td class="px-3 fw-bold" style="color: var(--tn-primary);">${{ inmueble.precio_formateado }}
+                        </td>
+                        <td class="px-3">
                             {% if inmueble.disponible %}
-                            <button type="submit" class="btn btn-warning btn-sm">Marcar como ocupado</button>
+                            <span class="badge bg-success">Disponible</span>
                             {% else %}
-                            <button type="submit" class="btn btn-success btn-sm">Marcar como disponible</button>
+                            <span class="badge bg-secondary">No disponible</span>
                             {% endif %}
-                        </form>
-                        <a href="{% url 'editar_inmueble' inmueble.pk %}" class="btn btn-primary btn-sm">Editar</a>
-                        <a href="{% url 'eliminar_inmueble' inmueble.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                        </td>
+                        <!-- Botones administracion -->
+                        <td class="px-3 text-center">
+                            <div class="d-inline-flex gap-1 align-items-center flex-nowrap">
+                                <form method="POST" action="{% url 'cambiar_disponibilidad' inmueble.id %}"
+                                    class="d-inline m-0">
+                                    {% csrf_token %}
+                                    {% if inmueble.disponible %}
+                                    <button type="submit" class="btn btn-secondary btn-sm">Marcar ocupado</button>
+                                    {% else %}
+                                    <button type="submit" class="btn btn-tn-success btn-sm">Marcar disponible</button>
+                                    {% endif %}
+                                </form>
+                                <a href="{% url 'editar_inmueble' inmueble.pk %}"
+                                    class="btn btn-tn-outline btn-sm">Editar</a>
+                                <a href="{% url 'eliminar_inmueble' inmueble.pk %}"
+                                    class="btn btn-tn-danger btn-sm">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
     {% else %}
     {% if region_query or comuna_query or direccion_query %}
-    <div class="alert alert-info" role="alert">
+    <div class="alert alert-info py-4 text-center" role="alert">
         No se encontraron inmuebles con los filtros seleccionados.
     </div>
     {% else %}
-    <div class="alert alert-info" role="alert">
-        Aún no tienes inmuebles publicados.
-        ¡Haz clic en el botón superior para agregar el primero!
+    <div class="alert alert-info py-4 text-center" role="alert">
+        Aún no tienes inmuebles publicados. ¡Haz clic en el botón superior para agregar el primero!
     </div>
     {% endif %}
     {% endif %}

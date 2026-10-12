@@ -1,25 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="container mt-4 mb-5">
+<div class="container-fluid px-0 mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">{{ inmueble.nombre }}</h3>
+        <div class="col-lg-10">
+            <div class="card shadow-sm border overflow-hidden">
+                <div class="card-header tn-card-header d-flex justify-content-between align-items-center py-3 px-4">
+                    <h3 class="mb-0 fs-4 fw-bold">{{ inmueble.nombre }}</h3>
                     <span class="badge bg-light text-dark fs-6">{{ inmueble.get_tipo_inmueble_display }}</span>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
 
                     <!-- CARRUSEL DE IMÁGENES -->
                     {% if inmueble.imagen_principal or inmueble.imagenes_carrusel.all %}
-                    <div id="carouselInmueble" class="carousel slide mb-4 shadow rounded overflow-hidden"
+                    <div id="carouselInmueble"
+                        class="carousel slide mb-4 rounded-3 overflow-hidden tn-carousel-container"
                         data-bs-ride="carousel">
-                        <div class="carousel-inner" style="max-height: 450px;">
+                        <div class="carousel-inner">
                             <!-- Imagen Principal -->
                             {% if inmueble.imagen_principal %}
                             <div class="carousel-item active">
-                                <img src="{{ inmueble.imagen_principal.url }}" class="d-block w-100"
-                                    alt="{{ inmueble.nombre }}" style="object-fit: cover; height: 450px;">
+                                <img src="{{ inmueble.imagen_principal.url }}" class="d-block w-100 tn-carousel-img"
+                                    alt="{{ inmueble.nombre }}">
                             </div>
                             {% endif %}
 
@@ -27,8 +30,8 @@
                             {% for img in inmueble.imagenes_carrusel.all %}
                             <div
                                 class="carousel-item {% if not inmueble.imagen_principal and forloop.first %}active{% endif %}">
-                                <img src="{{ img.imagen.url }}" class="d-block w-100" alt="Foto adicional"
-                                    style="object-fit: cover; height: 450px;">
+                                <img src="{{ img.imagen.url }}" class="d-block w-100 tn-carousel-img"
+                                    alt="Foto adicional">
                             </div>
                             {% endfor %}
                         </div>
@@ -48,71 +51,71 @@
                     {% endif %}
                     <!-- FIN DEL CARRUSEL -->
 
-                    <div class="row">
+                    <div class="row g-4">
                         <!-- Columna de Información Principal -->
                         <div class="col-md-7">
-                            <h4 class="text-secondary mb-3">Descripción</h4>
-                            <p class="text-muted">{{ inmueble.descripcion|default:"Sin descripción disponible." }}</p>
+                            <h5 class="fw-bold mb-3">Descripción</h5>
+                            <p class="text-secondary leading-relaxed mb-4">
+                                {{ inmueble.descripcion|default:"Sin descripción disponible." }}</p>
 
                             <hr>
 
-                            <h5 class="text-secondary mt-4">Ubicación</h5>
+                            <h5 class="fw-bold mt-4 mb-2">Ubicación</h5>
                             <p class="mb-1"><strong>Dirección:</strong> {{ inmueble.direccion }}</p>
                             <p class="mb-3"><strong>Comuna:</strong> {{ inmueble.comuna }}</p>
                         </div>
 
                         <!-- Columna de Atributos y Precio -->
-                        <div class="col-md-5 border-start">
-                            <div class="p-3 bg-light rounded shadow-sm mb-4">
-                                <h5 class="text-success fw-bold mb-3">Precio Mensual</h5>
-                                <h2 class="text-dark fw-bold">${{ inmueble.precio_formateado }} <span
-                                        class="fs-6 text-muted font-weight-normal">CLP</span></h2>
+                        <div class="col-md-5">
+                            <div class="p-3 bg-light rounded-3 border mb-4">
+                                <span class="small text-muted fw-bold d-block mb-1">Precio Mensual</span>
+                                <h2 class="tn-price-text fw-bold mb-0">${{ inmueble.precio_formateado }} <span
+                                        class="fs-6 text-muted fw-normal">CLP</span></h2>
                             </div>
 
-                            <h5 class="text-secondary mb-3">Características</h5>
-                            <ul class="list-group list-group-flush mb-4">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span><i class="fas fa-bed me-2"></i> Habitaciones</span>
-                                    <span>{{ inmueble.habitaciones }}</span>
+                            <h5 class="fw-bold mb-3">Características</h5>
+                            <ul class="list-group list-group-flush border rounded-3 mb-4">
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                    <span>Habitaciones</span>
+                                    <strong>{{ inmueble.habitaciones }}</strong>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span><i class="fas fa-bath me-2"></i> Baños</span>
-                                    <span>{{ inmueble.banos }}</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                    <span>Baños</span>
+                                    <strong>{{ inmueble.banos }}</strong>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span><i class="fas fa-parking me-2"></i> Estacionamientos</span>
-                                    <span>{{ inmueble.estacionamientos }}</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                    <span>Estacionamientos</span>
+                                    <strong>{{ inmueble.estacionamientos }}</strong>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span><i class="fas fa-ruler-combined me-2"></i> Superficie Construida</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                    <span>Superficie Construida</span>
                                     <strong>{{ inmueble.m2_construidos }} m²</strong>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span><i class="fas fa-ruler me-2"></i> Superficie Total</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                                    <span>Superficie Total</span>
                                     <strong>{{ inmueble.m2_totales }} m²</strong>
                                 </li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-4 pt-3 border-top">
-                        <a href="{% url 'listar_inmuebles' %}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left me-1"></i> Volver al listado
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mt-4 pt-3 border-top">
+                        <a href="{% url 'listar_inmuebles' %}" class="btn btn-outline-secondary">
+                            Volver al listado
                         </a>
-
-                        <div>
+                        <div class="d-flex flex-wrap gap-2">
                             {% if user.is_authenticated and user == inmueble.propietario %}
-                            <a href="{% url 'editar_inmueble' inmueble.id %}" class="btn btn-warning me-2">Editar</a>
+                            <a href="{% url 'editar_inmueble' inmueble.id %}" class="btn btn-warning">Editar</a>
                             <a href="{% url 'eliminar_inmueble' inmueble.id %}" class="btn btn-danger">Eliminar</a>
                             {% endif %}
 
                             {% if not user.is_authenticated %}
-                            <a href="{% url 'login' %}" class="btn btn-outline-primary">
-                                <i class="fas fa-sign-in-alt me-1"></i> Inicia sesión para contactar
+                            <a href="{% url 'login' %}" class="btn btn-tn-outline">
+                                Inicia sesión para contactar
                             </a>
                             {% elif user.perfil.tipo_usuario == 'arrendatario' %}
-                            <a href="{% url 'contacto_arrendador' inmueble.pk %}" class="btn btn-primary">
-                                <i class="fas fa-envelope me-1"></i> Contactar arrendador
+                            <a href="{% url 'contacto_arrendador' inmueble.pk %}" class="btn btn-tn-primary">
+                                Contactar arrendador
                             </a>
                             {% endif %}
                         </div>
@@ -121,6 +124,5 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}

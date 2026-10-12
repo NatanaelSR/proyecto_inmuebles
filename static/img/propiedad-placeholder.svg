@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" width="600" height="340">
+  <defs>
+    <linearGradient id="phBgBirdhouseClean" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#16324F"/>
+      <stop offset="100%" stop-color="#0A1828"/>
+    </linearGradient>
+    <linearGradient id="phGoldBirdhouseClean" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3E5C8"/>
+      <stop offset="50%" stop-color="#D6B77A"/>
+      <stop offset="100%" stop-color="#B8934E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="340" fill="url(#phBgBirdhouseClean)"/>
+
+  <!-- Trama concéntrica elegante -->
+  <circle cx="300" cy="155" r="130" fill="none" stroke="#D6B77A" stroke-width="1.5" stroke-opacity="0.15"/>
+  <circle cx="300" cy="155" r="190" fill="none" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.05"/>
+
+  <!-- Isotipo centrado: Pajarera estilizada limpia -->
+  <g transform="translate(265, 78)">
+    <!-- Argolla superior para colgar -->
+    <path d="M31 10 C31 7 32.8 5 35 5 C37.2 5 39 7 39 10" fill="none" stroke="url(#phGoldBirdhouseClean)" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Techo a dos aguas con alero pronunciado -->
+    <path d="M9 28 L35 11 L61 28" fill="none" stroke="#FFFFFF" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Paredes y base de la pajarera -->
+    <path d="M16 29.5 V58 C16 60.5 18 62 20.5 62 H49.5 C52 62 54 60.5 54 58 V29.5" 
+          fill="none" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Entrada circular limpia dorada -->
+    <circle cx="35" cy="43" r="10" fill="url(#phGoldBirdhouseClean)"/>
+    <circle cx="35" cy="43" r="6.6" fill="#0A1828"/>
+  </g>
+
+  <!-- Textos -->
+  <text x="300" y="215" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="0.5px">
+    Tu<tspan fill="#D6B77A">Nido</tspan> Living
+  </text>
+  <text x="300" y="242" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="12" font-weight="500" fill="#94A3B8" letter-spacing="2px" text-transform="uppercase">
+    Fotografía en preparación
+  </text>
+</svg>

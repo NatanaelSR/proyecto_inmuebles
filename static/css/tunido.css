@@ -1,0 +1,225 @@
+/* ==========================================================================
+   TuNido - Hoja de Estilos Oficial Minimalista
+   Complemento de marca sobre Bootstrap 5 (Sin utilidades redundantes)
+   ========================================================================== */
+
+:root {
+  /* Identidad Visual TuNido */
+  --tn-primary: #16324F;
+  --tn-primary-dark: #0e2135;
+  --tn-primary-light: #20456c;
+  --tn-gold: #D6B77A;
+  --tn-gold-light: #F3E5C8;
+  --tn-gold-border: rgba(214, 183, 122, 0.45);
+  --tn-bg-body: #F3F6FA;
+  --tn-text-main: #16324F;
+  --tn-text-body: #344054;
+  --tn-text-muted: #667085;
+  --tn-border: #d0d7e2;
+  --tn-success: #108A56;
+  --tn-success-bg: #e6f7ef;
+}
+
+body {
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  background-color: var(--tn-bg-body);
+  color: var(--tn-text-body);
+}
+
+/* Encabezados con tono corporativo */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--tn-text-main);
+  letter-spacing: -0.015em;
+}
+
+/* ==========================================================================
+   NAVBAR & LOGO
+   ========================================================================== */
+.tn-navbar {
+  background-color: var(--tn-primary);
+  border-bottom: 2px solid var(--tn-gold-border);
+}
+
+.tn-brand-logo {
+  height: 40px;
+  width: auto;
+}
+
+.tn-nav-link {
+  color: #d7dade !important;
+  font-weight: 500;
+  transition: color 0.15s ease-in-out;
+}
+
+.tn-nav-link:hover {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   BOTONES CORPORATIVOS
+   ========================================================================== */
+.btn-tn-primary {
+  background-color: var(--tn-primary);
+  border-color: var(--tn-primary);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-tn-primary:hover, .btn-tn-primary:focus {
+  background-color: var(--tn-primary-light);
+  border-color: var(--tn-primary-light);
+  color: #ffffff;
+}
+
+.btn-tn-outline {
+  border: 1.5px solid var(--tn-primary);
+  color: var(--tn-primary);
+  font-weight: 600;
+  background-color: transparent;
+}
+
+.btn-tn-outline:hover {
+  background-color: var(--tn-primary);
+  border-color: var(--tn-primary);
+  color: #ffffff;
+}
+
+.btn-tn-success {
+  background-color: var(--tn-success);
+  border-color: var(--tn-success);
+  color: #ffffff;
+  font-weight: 500;
+}
+.btn-tn-success:hover {
+  background-color: #0d6e43;
+  border-color: #0d6e43;
+  color: #ffffff;
+}
+
+.btn-tn-danger {
+  background-color: #b33939;
+  border-color: #b33939;
+  color: #ffffff;
+  font-weight: 500;
+}
+.btn-tn-danger:hover {
+  background-color: #922b2b;
+  border-color: #922b2b;
+  color: #ffffff;
+}
+
+/* Evitar que los botones de acción crezcan en móviles y mantener scroll en tabla */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive .btn-sm {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   CARDS DE PROPIEDADES (Control de dimensiones e imágenes)
+   ========================================================================== */
+.tn-property-card {
+  border-color: var(--tn-border);
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.tn-property-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(22, 50, 79, 0.08) !important;
+}
+
+.tn-card-img-container {
+  height: 220px;
+  background-color: var(--tn-primary-dark);
+}
+
+.tn-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tn-card-title a {
+  color: var(--tn-primary);
+  text-decoration: none;
+}
+
+.tn-card-title a:hover {
+  color: var(--tn-primary-light);
+}
+
+.tn-card-desc {
+  min-height: 44px;
+}
+
+.tn-price-text {
+  color: var(--tn-success);
+  font-weight: 700;
+}
+
+/* Pill flotante para disponibilidad */
+.tn-pill-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   CARRUSEL & DETALLE
+   ========================================================================== */
+.tn-carousel-container {
+  max-height: 450px;
+  background-color: var(--tn-primary-dark);
+}
+
+.tn-carousel-img {
+  height: 450px;
+  object-fit: cover;
+}
+
+@media (max-width: 767.98px) {
+  .tn-carousel-container, .tn-carousel-img {
+    height: 280px;
+  }
+}
+
+/* ==========================================================================
+   CABECERAS DE TARJETAS INSTITUCIONALES
+   ========================================================================== */
+.tn-card-header {
+  background-color: var(--tn-primary);
+  color: #ffffff;
+  border-bottom: 2px solid var(--tn-gold-border);
+}
+
+.tn-card-header h3, 
+.tn-card-header h4, 
+.tn-card-header h5 {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.tn-footer {
+  background-color: var(--tn-primary);
+  color: #94a3b8;
+  border-top: 2px solid var(--tn-gold-border);
+}
+
+.tn-footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.tn-footer a:hover {
+  color: var(--tn-gold);
+}
